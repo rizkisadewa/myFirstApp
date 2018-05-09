@@ -1,0 +1,26 @@
+<div class="xs">
+  <h3>Adding Spot</h3>
+  <div class="well1 white">
+    <div class="tab-content">
+      <div class="tab-pane active" id="horizontal-form">
+
+        <form class="form-horizontal" id="form-input" method="post" action="/admin/odtw/test" enctype="multipart/form-data">
+          <%= typeof msg != 'undefined' ? msg : '' %>
+          <div class="file-field input-field">
+            <div class="btn grey">
+              <span>File</span>
+              <input name="odtwImgProf" type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
+          </div>
+          <button type="submit" name="button" class="btn" value="Submit">Submit</button>
+
+        </form>
+        <img src="../../<%= typeof file != 'undefined' ? file : '' %>" class="responsive-img">
+      </div>
+    </div>
+
+  </div>
+</div>

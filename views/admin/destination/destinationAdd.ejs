@@ -1,0 +1,167 @@
+<% layout('../adminlayout/adminlayout') -%>
+
+<div class="grid_3 grid_5">
+  <div class="but_list">
+    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+
+      <!-- Header of Tabs -->
+      <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#country" id="country-tab" role="tab" data-toggle="tab" aria-controls="country" aria-expanded="true">Country</a></li>
+        <li role="presentation"><a href="#province" role="tab" id="province-tab" data-toggle="tab" aria-controls="province">Province</a></li>
+      </ul>
+
+      <!-- Content of Tabs -->
+      <div id="myTabContent" class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="country" aria-labelledby="country-tab">
+
+          <!-- Input Country -->
+          <form class="form-horizontal" id="destination-location-input" method="post" action="/admin/destination/add">
+            <div class="form-group">
+              <label for="focusedinput" class="col-sm-1 control-label">Country</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control1 required" id="location-input" placeholder="Input Country" name="country">
+                <span class="msg"></span>
+              </div>
+
+              <label for="focusedinput" class="col-sm-2 control-label">Country's Latitude</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control1" id="latitudeForm" name="destLat" placeholder="...">
+                <span class="msg"></span>
+              </div>
+
+              <label for="focusedinput" class="col-sm-2 control-label">Country's Longitude</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control1" id="longitudeForm" name="destLng" placeholder="...">
+                <span class="msg"></span>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-sm-5 col-sm-offset-1">
+                <button id="checkGeocode" class="btn-success btn">Check Validity Geolocation</button>
+
+              </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+              <div class="col-sm-5 col-sm-offset-1">
+                <button class="btn-success btn" value="submit">Add to Database</button>
+                <button class="btn-inverse btn">Reset</button>
+              </div>
+            </div>
+
+          </form>
+          <br>
+          <table class="table table-striped">
+            <thead>
+              <tr class="warning">
+                <th>Name of Country</th>
+                <th>Activity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% destination.forEach(function(destination){ %>
+              <tr>
+                <td><%= destination.country_name %></td>
+                <td>
+                  <a href="/admin/destination/edit/<%- destination._id %>"><button type="button" class="btn btn-xs btn-primary">Edit</button></a>
+                  <a href="#" class="btn btn-danger btn-xs delete-destination" data-id = "<%- destination._id %>" >Delete</a>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+  		  </div>
+
+        <!-- Add Province -->
+  		  <div role="tabpanel" class="tab-pane fade" id="province" aria-labelledby="province-tab">
+          <form class="form-horizontal" id="destination-location-input" method="post" action="/admin/destination/add/province">
+            <div class="form-group">
+              <label for="focusedinput" class="col-sm-1 control-label">Country</label>
+              <div class="col-sm-3">
+                <select name="selectedCountry" id="selector1" class="form-control1">
+                  <% destination.forEach(function(destination){ %>
+                  <option value="<%= destination.country_name %>"><%= destination.country_name %></option>
+                  <% }); %>
+
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="focusedinput" class="col-sm-1 control-label">Province</label>
+              <div class="col-sm-3">
+                <input type="text" id="location-input-province" class="form-control1 required" placeholder="Input Province" name="province">
+                <span class="msg"></span>
+              </div>
+
+              <label for="focusedinput" class="col-sm-2 control-label">Province's Latitude</label>
+              <div class="col-sm-2">
+                <input type="text" id="ProvLatitudeForm" class="form-control1" placeholder="..." name="prov_lat">
+                <span class="msg"></span>
+              </div>
+              <label for="focusedinput" class="col-sm-2 control-label">Province's Longitude</label>
+              <div class="col-sm-2">
+                <input type="text" id="ProvLongitudeForm" class="form-control1" placeholder="..." name="prov_lng">
+                <span class="msg"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-5 col-sm-offset-1">
+                <button id="checkGeoProv" class="btn-success btn">Check Validity Geolocation</button>
+
+              </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+              <div class="col-sm-5 col-sm-offset-1">
+                <button class="btn-success btn" value="submit">Add to Database</button>
+                <button class="btn-inverse btn">Reset</button>
+              </div>
+            </div>
+          </form>
+
+          <br>
+
+          <table class="table table-striped">
+            <thead>
+              <tr class="warning">
+                <th>No</th>
+                <th>Province</th>
+                <th>Name of Country</th>
+                <th>Activity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(let j = 0 ; j < destination.length; j++){ %>
+                <% for(let i = 0 ; i < destination[j].province.length; i++ ){ %>
+                  <tr>
+                    <td><%= i %></td>
+                    <td><%= destination[j].province[i].province_name %></td>
+                    <td><%= destination[j].country_name %></td>
+                    <td>
+                      <a href="/admin/destination/add">
+                        <button class="btn btn-xs btn-danger delete-province" data-id = "<%- destination[j].province[i]._id %>"  >
+                         Delete
+                        </button>
+                      </a>
+                    </td>
+                  </tr>
+                <% } %>
+              <% } %>
+            </tbody>
+          </table>
+
+  		  </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

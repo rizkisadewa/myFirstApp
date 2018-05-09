@@ -1,0 +1,60 @@
+<% layout('../adminlayout/adminlayout') -%>
+
+<div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}" data-widget-static="">
+    <div class="panel-body no-padding">
+      <table class="table table-striped">
+        <thead>
+          <tr class="warning">
+            <th>No</th>
+            <th>Admin No.</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Access Type</th>
+            <th>Activity</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <% admins.forEach(function(admin){ %>
+          <tr>
+            <td><% for(let i=0; i < admin; i++){
+              document.write(i);
+            }%></td>
+            <td><%= admin.adminNo %></td>
+            <td><%= admin.name %></td>
+            <td><%= admin.username %></td>
+            <td><%= admin.accessType %></td>
+            <td>
+              <a href="/admin/edit/<%- admin._id %>"><button type="button" class="btn btn-xs btn-primary">Edit</button></a>
+              <!--<a href="#" ><button type="button" class="btn btn-xs btn-danger" class="delete-admin">Dalete</button></a>-->
+              <a href="#" class="btn btn-xs btn-danger delete-admin" data-id = "<%- admin._id %>">Dalete</a>
+            </td>
+
+          </tr>
+          <% }); %>
+
+        </tbody>
+
+      </table>
+
+      <div class="col-md-10"></div>
+      <div class="col-md-2">
+        <a href="/admin/add"><button type="button" class="btn btn-sm btn-success warning_3">Add User</button></a>
+      </div>
+
+      <!-- Pagination -->
+      <div class="col-md-3"></div>
+      <div class="col-md-6"></div>
+      <div class="col-md-3">
+        <ul class="pagination pagination-sm">
+          <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>
+          <li class="active"><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+        </ul>
+      </div>
+    </div>
+</div>

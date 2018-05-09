@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Destination Bank Admin</title>
+  <% include head.ejs%>
+</head>
+
+<body>
+  <div id="wrapper">
+    <!-- Navigation -->
+    <% include navigation.ejs %>
+    <!-- // Navigation -->
+
+    <div id="page-wrapper">
+      <div class="graphs">
+        <!-- a massage -->
+        <%- messages('admin/my_message_template', locals) %>
+
+
+
+        <!-- Insert Body here -->
+    		<%- body %>
+
+
+        <% include footer.ejs %>
+
+      </div>
+    </div>
+    <!-- /#page-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+</body>
+<!-- Bootstrap Core JavaScript -->
+<script type="text/javascript" src="/fromtemplate/login/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/admin/js/jquery_main.js"></script>
+<script type="text/javascript" src="/admin/js/odtw_main.js"></script>
+<script type="text/javascript" src="/admin/js/main.js"></script>
+</html>

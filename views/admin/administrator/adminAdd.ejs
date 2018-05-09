@@ -1,0 +1,45 @@
+<% layout('../adminlayout/adminlayout') -%>
+
+<div class="xs">
+  <h3>Add User Data</h3>
+  <div class="well1 white">
+    <form id="form-input" class="form-floating ng-pristine ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern" novalidate="novalidate" ng-submit="submit()" method="post", action="/admin/add">
+      <fieldset>
+        <div class="form-group">
+          <label class="control-label">Admin No. </label>
+          <input type="text" class="form-control1 ng-invalid ng-invalid-required ng-touched required" ng-model="model.name" required="" name="adminNo">
+          <span class="msg"></span>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Name</label>
+          <input type="text" class="form-control1 ng-invalid ng-invalid-required ng-touched required" ng-model="model.name" required="" name="name">
+          <span class="msg"></span>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Username</label>
+          <input type="text" class="form-control1 ng-invalid ng-invalid-required ng-touched required" ng-model="model.name" required="" name="username">
+          <span class="msg"></span>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Password</label>
+          <input type="password" class="form-control1 ng-invalid ng-invalid-required ng-touched required" ng-model="model.password" required="" name="password">
+          <span class="msg"></span>
+        </div>
+
+        <div class="form-group filled">
+          <label class="control-label">Access Type</label>
+          <select class="form-control1 ng-invalid ng-invalid-required" ng-model="model.select" required="" name="accessType"><option value="? undefined:undefined ?"></option>
+            <option value="Super User">Super User</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" value="submit">Add Admin</button>
+          <button type="reset" class="btn btn-default">Reset</button>
+        </div>
+      </fieldset>
+    </form>
+
+  </div>
+</div>

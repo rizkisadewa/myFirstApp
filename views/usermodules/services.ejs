@@ -1,0 +1,32 @@
+<!-- Service 2 -->
+<div class="about-grids1" id="services">
+  <div class="container">
+    <div class="col-md-6 about-bottom-left">
+    	<div class="w3-about-bottom-head">
+      	<h3>Perjalanan Kita</h3>
+      	<p>Temukan tempat terbaikmu di sini, karena kita melakukan perjalanan untuk kebahagian dan dengan suka cita</p>
+
+      </div>
+      <div class="w3-about-bottom-body">
+        <form class="form-horizontal" action="/" method="get"> <!-- STILL NEED TO BE CHECKED -->
+          <a class="js-scroll-trigger" href="#organizeTour">
+            <button type="button" class="btn btn-primary btn-md text-uppercase col-md-4" id="mapStarted" name="button">Mulai</button>
+          </a>
+          <br><br>
+          <select name="odtw[province]" id="map-destination" class="form-control col-md-4">
+            <% for(let j = 0 ; j < destination.length; j++){ %>
+              <% for(let i = 0 ; i < destination[j].province.length; i++ ){ %>
+              <option value="<%= destination[j].province[i].province_name %>" data-id = "<%= destination[j].province[i]._id %>"><%= destination[j].province[i].province_name %></option>
+              <% } %>
+            <% } %>
+
+          </select>
+        </form>
+      </div>
+    </div>
+
+    <br>
+
+  </div>
+
+</div>

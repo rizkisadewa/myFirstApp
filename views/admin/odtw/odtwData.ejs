@@ -1,0 +1,59 @@
+<% layout('../adminlayout/adminlayout') -%>
+
+<div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}" data-widget-static="">
+  <div class="panel-body no-padding">
+
+    <table class="table table-striped">
+      <thead>
+        <tr class="warning">
+          <th>Name of Spot</th>
+          <th>Country</th>
+          <th>Province</th>
+          <th>Area</th>
+          <th>Activity</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% odtw.forEach(function(odtw){ %>
+        <tr>
+          <td><a href="/admin/odtw/view/<%- odtw._id %>"><%= odtw.odtw_name %></a></td>
+          <td><%= odtw.country %></td>
+          <td><%= odtw.province %></td>
+          <td><%= odtw.area %></td>
+          <td>
+            <a href="/admin/odtw/edit/<%- odtw._id %>"><button type="button" id="embedData" class="btn btn-xs btn-primary">Edit</button></a>
+            <a href="#" class="btn btn-xs btn-danger delete-odtw" data-id = "<%- odtw._id %>">Delete</a>
+          </td>
+        </tr>
+
+
+
+        <% }); %>
+
+      </tbody>
+
+    </table>
+
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+      <a href="/admin/odtw/add"><button type="button" class="btn btn-sm btn-success warning_3">Adding Spot</button></a>
+    </div>
+
+    <!-- Pagination -->
+    <div class="col-md-3"></div>
+    <div class="col-md-6"></div>
+    <div class="col-md-3">
+      <ul class="pagination pagination-sm">
+        <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+      </ul>
+    </div>
+
+    </div>
+</div>

@@ -1,0 +1,240 @@
+<% layout('../adminlayout/adminlayout') -%>
+
+<div class="xs">
+  <h3>Adding Spot</h3>
+  <div class="well1 white">
+    <div class="tab-content">
+      <div class="tab-pane active" id="horizontal-form">
+
+        <form class="form-horizontal" id="form-input" method="post" action="/admin/odtw/add" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="focusedinput" class="col-sm-2 control-label">Name of Object</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control1 required" id="location-input" placeholder="Input name" name="odtw[odtw_name]">
+              <span class="msg"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="focusedinput" class="col-sm-2 control-label">Latitude</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control1" id="latitudeForm" placeholder="..." name="odtw[lat]">
+              <span class="msg"></span>
+            </div>
+            <label for="focusedinput" class="col-sm-1 control-label">Longitude</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control1" id="longitudeForm" placeholder="..." name="odtw[lng]">
+              <span class="msg"></span>
+            </div>
+            <label for="focusedinput" class="col-sm-1 control-label">Altitude</label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control1" id="focusedinput angka" placeholder="Above Sea Level" name="odtw[altitude]">
+              <span class="msg"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="focusedinput" class="col-sm-2 control-label">Country</label>
+            <div class="col-sm-3">
+              <select name="odtw[country]" id="selector1" class="form-control1">
+                <% for(let j = 0 ; j < destination.length; j++){ %>
+                <option value="<%= destination[j].country_name %>"><%= destination[j].country_name %></option>
+                <% } %>
+
+              </select>
+            </div>
+
+            <label for="focusedinput" class="col-sm-1 control-label">Province</label>
+            <div class="col-sm-3">
+              <select name="odtw[province]" id="selector1" class="form-control1">
+                <% for(let j = 0 ; j < destination.length; j++){ %>
+                  <% for(let i = 0 ; i < destination[j].province.length; i++ ){ %>
+                  <option value="<%= destination[j].province[i].province_name %>"><%= destination[j].province[i].province_name %></option>
+                  <% } %>
+                <% } %>
+
+              </select>
+            </div>
+
+            <label for="focusedinput" class="col-sm-1 control-label">Area</label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control1" id="selector1" name="odtw[area]">
+            </div>
+
+          </div>
+
+          <div class="row">
+      			<div class="col-sm-5 col-sm-offset-2">
+      				<button id="checkGeocode" class="btn-success btn">Check Validity Geolocation</button>
+
+      			</div>
+      		</div>
+
+          <br>
+
+          <div class="form-group">
+            <label for="txtarea1" class="col-sm-2 control-label">Brief Description</label>
+            <div class="col-sm-10">
+              <textarea name="odtw[description]" id="txtarea1" cols="50" rows="20" class="form-control1 required"></textarea>
+              <span class="msg"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="txtarea1" class="col-sm-2 control-label">Background Story</label>
+            <div class="col-sm-10">
+              <textarea name="odtw[bck_story]" id="txtarea1" cols="50" rows="20" class="form-control1 required"></textarea>
+              <span class="msg"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="txtarea1" class="col-sm-2 control-label">Worth Visiting</label>
+            <div class="col-sm-2">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="star-rating-visit">
+                      <span class="fa fa-star-o" data-rating="1"></span>
+                      <span class="fa fa-star-o" data-rating="2"></span>
+                      <span class="fa fa-star-o" data-rating="3"></span>
+                      <span class="fa fa-star-o" data-rating="4"></span>
+                      <span class="fa fa-star-o" data-rating="5"></span>
+                      <input type="hidden" name="odtw[rating_visit]" class="rating-value" value="2.56">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <label for="txtarea1" class="col-sm-2 control-label">Cleanliness</label>
+            <div class="col-sm-2">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="star-rating-clean" id="cleanliness-rating">
+                      <span class="fa fa-star-o" data-rating="1"></span>
+                      <span class="fa fa-star-o" data-rating="2"></span>
+                      <span class="fa fa-star-o" data-rating="3"></span>
+                      <span class="fa fa-star-o" data-rating="4"></span>
+                      <span class="fa fa-star-o" data-rating="5"></span>
+                      <input type="hidden" name="odtw[rating_cleaness]" class="rating-value" value="2.56">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <label for="txtarea1" class="col-sm-2 control-label">Value of Money</label>
+            <div class="col-sm-2">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="star-rating-money">
+                      <span class="fa fa-star-o" data-rating="1"></span>
+                      <span class="fa fa-star-o" data-rating="2"></span>
+                      <span class="fa fa-star-o" data-rating="3"></span>
+                      <span class="fa fa-star-o" data-rating="4"></span>
+                      <span class="fa fa-star-o" data-rating="5"></span>
+                      <input type="hidden" name="odtw[rating_money_value]" class="rating-value" value="2.56">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="selector1" class="col-sm-2 control-label">Local Guide</label>
+            <div class="col-sm-1">
+              <select id="select-local-guide" name="odtw[local_guide]" class="form-control1">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+
+            </div>
+
+            <label for="selector1" class="col-sm-2 control-label">Information Services</label>
+            <div class="col-sm-1">
+              <select name="odtw[info_center]" id="selector1" class="form-control1">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+
+            <label for="selector1" class="col-sm-2 control-label">Clinic</label>
+            <div class="col-sm-1">
+              <select name="odtw[clinic]" id="selector1" class="form-control1">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+
+            <label for="selector1" class="col-sm-2 control-label">Litter Basket</label>
+            <div class="col-sm-1">
+              <select name="odtw[litter_basket]" id="selector1" class="form-control1">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+
+
+
+          </div>
+
+          <div class="form-group">
+            <label for="selector1" class="col-sm-2 control-label">Restaurant</label>
+            <div class="col-sm-1">
+              <select name="odtw[restaurant]" id="selector1" class="form-control1">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+
+            <label for="selector1" class="col-sm-2 control-label">Shopping Center</label>
+            <div class="col-sm-1">
+              <select name="odtw[shopping_center]" id="selector1" class="form-control1">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+
+            <label for="selector1" class="col-sm-2 control-label">Lavatory</label>
+            <div class="col-sm-1">
+              <select name="odtw[lavatory]" id="selector1" class="form-control1">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+              <label for="exampleInputFile">File input</label>
+              <input type="file" name="image" id="odtwImg">
+              <p class="help-block">Select Spot Picture Profile</p>
+              <img src="" id="preview" width="200px">
+              <%= typeof msg != 'undefined' ? msg : '' %>
+            </div>
+          </div>
+
+
+
+          <div class="row">
+      			<div class="col-sm-5 col-sm-offset-2">
+      				<button class="btn-success btn" value="submit">Add to Database</button>
+      				<button class="btn-inverse btn">Reset</button>
+      			</div>
+      		</div>
+
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

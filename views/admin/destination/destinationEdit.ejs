@@ -1,0 +1,50 @@
+<% layout('../adminlayout/adminlayout') -%>
+
+<div class="xs">
+  <h3>Edit Country</h3>
+  <div class="well1 white">
+    <div class="tab-content">
+      <div class="tab-pane active" id="horizontal-form">
+
+        <form class="form-horizontal" id="destination-location-input" method="post" action="/admin/destination/edit/<%- destination._id %>">
+          <div class="form-group">
+            <label for="focusedinput" class="col-sm-1 control-label">Country</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control1 required" id="countryForm" placeholder="Input Country" name="country" value="<%- destination.country_name %>">
+              <span class="msg"></span>
+            </div>
+            <label for="focusedinput" class="col-sm-1 control-label">Latitude</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control1" id="latitudeForm" placeholder="..." name="destLat" value="<%- destination.dest_lat %>">
+              <span class="msg"></span>
+            </div>
+            <label for="focusedinput" class="col-sm-1 control-label">Longitude</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control1" id="longitudeForm" placeholder="..." name="destLng" value="<%- destination.dest_lng %>">
+              <span class="msg"></span>
+            </div>
+          </div>
+
+          <div class="row">
+      			<div class="col-sm-5 col-sm-offset-1">
+      				<button id="checkGeocode" class="btn-success btn">Check Validity Geolocation</button>
+
+      			</div>
+      		</div>
+
+          <br>
+
+          <div class="row">
+      			<div class="col-sm-5 col-sm-offset-1">
+      				<button class="btn-success btn" value="submit">Update to Database</button>
+      				<button class="btn-inverse btn">Reset</button>
+      			</div>
+      		</div>
+
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<% layout('../adminlayout/adminlayout') -%>
+<div class="well1 white">
+  <div class="tab-content">
+
+    <div class="wid_blog">
+      <h1><%- odtw.odtw_name %></h1>
+      <a href="/admin/odtw/edit/<%- odtw._id %>"><button type="button" class="btn btn-xs btn-primary">Edit</button></a>
+      <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#myModal">
+       Delete
+      </button>
+    </div>
+    <div class="wid_blog-desc">
+      <div class="wid_blog-left">
+        <img src="<%- odtw.image %>" class="img-responsive" alt="">
+        <br>
+          <i>Rating Visit: </i>
+          <% for(let i = 0; i < odtw.rating_visit; i++){ %>
+          <a href="#" class="text-orange"><i class="fa fa-heart"></i></a>
+          <% } %>
+          <br>
+          <i>Clean: </i>
+          <% for(let i = 0; i < odtw.rating_cleaness; i++){ %>
+          <a href="#" class="text-orange"><i class="fa fa-heart"></i></a>
+          <% } %>
+          <br>
+          <i>Value: </i>
+          <% for(let i = 0; i < odtw.rating_money_value; i++){ %>
+          <a href="#" class="text-orange"><i class="fa fa-heart"></i></a>
+          <% } %>
+      </div>
+      <div class="wid_blog-right">
+        <h5>Brief Description</h5>
+        <%- odtw.description %>
+        <br>
+        <h5>Background Story</h5>
+        <%- odtw.bck_story %>
+        <br>
+        <br>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Local Guide</th>
+                <th>Information Center</th>
+                <th>Clinic</th>
+                <th>Litter Basket</th>
+                <th>Local Restaurant</th>
+                <th>Shopping Center</th>
+                <th>Rest Room</th>
+              </tr>
+              <tbody>
+                <tr>
+                  <td><%- odtw.local_guide %></td>
+                  <td><%- odtw.info_center %></td>
+                  <td><%- odtw.clinic %></td>
+                  <td><%- odtw.litter_basket %></td>
+                  <td><%- odtw.restaurant %></td>
+                  <td><%- odtw.shopping_center %></td>
+                  <td><%- odtw.lavatory %></td>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="clearfix"> </div>
+    </div>
+
+    <!-- /.MODAL FOR DELETE COUNTRY -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+               <h2 class="modal-title">Deleting Data</h2>
+             </div>
+             <div class="modal-body">
+               <p>Are you sure would like to delete?</p>
+
+             <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel Delete</button>
+               <a href="#" class="btn btn-danger delete-odtw" data-id = "<%- odtw._id %>">Dalete</a>
+             </div>
+           </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+       </div>
+    </div>
+
+
+  </div>
+</div>

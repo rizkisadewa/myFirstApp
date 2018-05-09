@@ -1,0 +1,224 @@
+<% layout('../adminlayout/adminlayout') -%>
+
+<div class="xs">
+  <h3>Edit Spot</h3>
+  <div class="well1 white">
+    <div class="tab-content">
+      <div class="tab-pane active" id="horizontal-form">
+
+        <form class="form-horizontal" id="form-input" action="/admin/odtw/edit/<%= odtw._id %>" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="focusedinput" class="col-sm-2 control-label">Name of Object</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control1" id="location-input" name="odtw[odtw_name]" value="<%- odtw.odtw_name %>">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="focusedinput" class="col-sm-2 control-label">Latitude</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control1" id="latitudeForm" name="odtw[lat]" value="<%- odtw.lat %>">
+            </div>
+            <label for="focusedinput" class="col-sm-1 control-label">Longitude</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control1" id="longitudeForm" name="odtw[lng]" value="<%- odtw.lng %>">
+            </div>
+            <label for="focusedinput" class="col-sm-1 control-label">Altitude</label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control1" id="focusedinput" name="odtw[altitude]" value="<%- odtw.altitude %>">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="focusedinput" class="col-sm-2 control-label">Country</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control1" id="countryForm" name="odtw[country]" value="<%- odtw.country %>">
+            </div>
+
+            <label for="focusedinput" class="col-sm-1 control-label">Province</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control1" id="provinceForm" name="odtw[province]" value="<%- odtw.province %>">
+            </div>
+
+            <label for="focusedinput" class="col-sm-1 control-label">Area</label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control1" id="areaForm" name="odtw[area]" value="<%- odtw.area %>">
+            </div>
+          </div>
+
+          <div class="row">
+      			<div class="col-sm-5 col-sm-offset-2">
+      				<button id="checkGeocode" class="btn-success btn">Check Validity Geolocation</button>
+
+      			</div>
+      		</div>
+
+          <br>
+
+          <div class="form-group">
+            <label for="txtarea1" class="col-sm-2 control-label">Brief Description</label>
+            <div class="col-sm-10">
+              <textarea name="odtw[description]" id="txtarea1" cols="50" rows="20" class="form-control1"><%- odtw.description %></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="txtarea1" class="col-sm-2 control-label">Background Story</label>
+            <div class="col-sm-10">
+              <textarea name="odtw[bck_story]" id="txtarea1" cols="50" rows="20" class="form-control1"><%- odtw.bck_story %></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="txtarea1" class="col-sm-2 control-label">Worth Visiting</label>
+            <div class="col-sm-2">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="star-rating-visit">
+                      <span class="fa fa-star<%= (odtw.rating_visit < 1)?'-o':'' %>" data-rating="1"></span>
+                      <span class="fa fa-star<%= (odtw.rating_visit < 2)?'-o':'' %>" data-rating="2"></span>
+                      <span class="fa fa-star<%= (odtw.rating_visit < 3)?'-o':'' %>" data-rating="3"></span>
+                      <span class="fa fa-star<%= (odtw.rating_visit < 4)?'-o':'' %>" data-rating="4"></span>
+                      <span class="fa fa-star<%= (odtw.rating_visit < 5)?'-o':'' %>" data-rating="5"></span>
+                      <input type="hidden" name="odtw[rating_visit]" class="rating-value" value="<%- odtw.rating_visit %>">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <label for="txtarea1" class="col-sm-2 control-label">Cleanliness</label>
+            <div class="col-sm-2">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="star-rating-clean" id="cleanliness-rating">
+                      <span class="fa fa-star<%= (odtw.rating_cleaness < 1)?'-o':'' %>" data-rating="1"></span>
+                      <span class="fa fa-star<%= (odtw.rating_cleaness < 2)?'-o':'' %>" data-rating="2"></span>
+                      <span class="fa fa-star<%= (odtw.rating_cleaness < 3)?'-o':'' %>" data-rating="3"></span>
+                      <span class="fa fa-star<%= (odtw.rating_cleaness < 4)?'-o':'' %>" data-rating="4"></span>
+                      <span class="fa fa-star<%= (odtw.rating_cleaness < 5)?'-o':'' %>" data-rating="5"></span>
+                      <input type="hidden" name="odtw[rating_cleaness]" class="rating-value" value="<%- odtw.rating_cleaness %>">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <label for="txtarea1" class="col-sm-2 control-label">Value of Money</label>
+            <div class="col-sm-2">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="star-rating-money">
+                      <span class="fa fa-star<%= (odtw.rating_money_value < 1)?'-o':'' %>" data-rating="1"></span>
+                      <span class="fa fa-star<%= (odtw.rating_money_value < 2)?'-o':'' %>" data-rating="2"></span>
+                      <span class="fa fa-star<%= (odtw.rating_money_value < 3)?'-o':'' %>" data-rating="3"></span>
+                      <span class="fa fa-star<%= (odtw.rating_money_value < 4)?'-o':'' %>" data-rating="4"></span>
+                      <span class="fa fa-star<%= (odtw.rating_money_value < 5)?'-o':'' %>" data-rating="5"></span>
+                      <input type="hidden" name="odtw[rating_money_value]" class="rating-value" value="<%- odtw.rating_money_value %>">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="selector1" class="col-sm-2 control-label">Local Guide</label>
+            <div class="col-sm-1">
+              <select id="local-guide-<%= odtw.local_guide %>" name="odtw[local_guide]" class="form-control1">
+                <option value="No" <%= (odtw.local_guide == 'No')?'selected':'' %>>No</option>
+                <option value="Yes" <%= (odtw.local_guide == 'Yes')?'selected':'' %>>Yes</option>
+              </select>
+
+            </div>
+
+            <label for="selector1" class="col-sm-2 control-label">Information Services</label>
+            <div class="col-sm-1">
+              <select name="odtw[info_center]" id="selector1" class="form-control1" selected="<%= odtw.info_center %>">
+                <option value="No" <%= (odtw.info_center == 'No')?'selected':'' %>>No</option>
+                <option value="Yes" <%= (odtw.info_center == 'Yes')?'selected':'' %>>Yes</option>
+              </select>
+            </div>
+
+            <label for="selector1" class="col-sm-2 control-label">Clinic</label>
+            <div class="col-sm-1">
+              <select name="odtw[clinic]" id="selector1" class="form-control1">
+                <option value="No" <%= (odtw.clinic == 'No')?'selected':'' %>>No</option>
+                <option value="Yes" <%= (odtw.clinic == 'Yes')?'selected':'' %>>Yes</option>
+              </select>
+            </div>
+
+            <label for="selector1" class="col-sm-2 control-label">Litter Basket</label>
+            <div class="col-sm-1">
+              <select name="odtw[litter_basket]" id="selector1" class="form-control1">
+                <option value="No" <%= (odtw.litter_basket == 'No')?'selected':'' %>>No</option>
+                <option value="Yes" <%= (odtw.litter_basket == 'Yes')?'selected':'' %>>Yes</option>
+              </select>
+            </div>
+
+
+
+          </div>
+
+          <div class="form-group">
+            <label for="selector1" class="col-sm-2 control-label">Restaurant</label>
+            <div class="col-sm-1">
+              <select name="odtw[restaurant]" id="selector1" class="form-control1">
+                <option value="No" <%= (odtw.restaurant == 'No')?'selected':'' %>>No</option>
+                <option value="Yes" <%= (odtw.restaurant == 'Yes')?'selected':'' %>>Yes</option>
+              </select>
+            </div>
+
+            <label for="selector1" class="col-sm-2 control-label">Shopping Center</label>
+            <div class="col-sm-1">
+              <select name="odtw[shopping_center]" id="selector1" class="form-control1">
+                <option value="No" <%= (odtw.shopping_center == 'No')?'selected':'' %>>No</option>
+                <option value="Yes" <%= (odtw.shopping_center == 'Yes')?'selected':'' %>>Yes</option>
+              </select>
+            </div>
+
+            <label for="selector1" class="col-sm-2 control-label">Lavatory</label>
+            <div class="col-sm-1">
+              <select name="odtw[lavatory]" id="selector1" class="form-control1">
+                <option value="No" <%= (odtw.lavatory == 'No')?'selected':'' %>>No</option>
+                <option value="Yes" <%= (odtw.lavatory == 'Yes')?'selected':'' %>>Yes</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-3">
+              <label for="exampleInputFile">Picture</label>
+              <img src="<%- odtw.image %>" id="preview" width="200px">
+            </div>
+            <div class="col-sm-2">
+              <label for="exampleInputFile">New Picture File</label>
+              <input type="file" name="image" id="odtwImg" accept="image/*">
+              <p class="help-block">Select Spot Picture Profile</p>
+              <img src="" id="preview" width="200px">
+              <%= typeof msg != 'undefined' ? msg : '' %>
+            </div>
+
+          </div>
+
+          <div class="row">
+      			<div class="col-sm-5 col-sm-offset-2">
+      				<button class="btn-success btn">Update to Database</button>
+      				<a href="/admin/odtw/data"><button class="btn-inverse btn">Cancel</button></a>
+      			</div>
+      		</div>
+
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
