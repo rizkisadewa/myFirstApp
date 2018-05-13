@@ -116,7 +116,7 @@ router.post('/add', upload.single('image') , function(req, res){
           return;
         } else {
           req.flash('success', 'Spot Added');
-          res.redirect('/admin/odtw/data');
+          res.redirect('/admin/odtw/data/page-1');
         }
       });
 
