@@ -49,7 +49,7 @@
         <% if (current == 1) { %>
           <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>
         <% } else { %>
-          <li><a href="/admin/odtw/data/page-<%= current  %>"><i class="fa fa-angle-left"></i></a></li>
+          <li><a href="/admin/odtw/data/page-<%= Number(current)-1 %>"><i class="fa fa-angle-left"></i></a></li>
         <% } %>
 
         <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
@@ -63,7 +63,7 @@
         <% if (current == pages) { %>
           <li class="disabled"><a href="#"><i class="fa fa-angle-right"></i></a></li>
         <% } else { %>
-          <li><a href="/admin/odtw/data/page-<%= current %>"><i class="fa fa-angle-right"></i></a></li>
+          <li><a href="/admin/odtw/data/page-<%= Number(current)+1 %>"><i class="fa fa-angle-right"></i></a></li>
         <% } %>
       </ul>
     </div>
