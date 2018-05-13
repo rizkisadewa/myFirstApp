@@ -8,7 +8,7 @@ let Odtw = require('../models/odtwModel');
 let Destination = require('../models/destinationModel');
 
 //view data of ODTW
-router.get('/data/:page', function(req, res, next){
+router.get('/data/page-:page', function(req, res){
   var perPage = 5;
   var page = req.params.page || 1;
 
@@ -16,14 +16,17 @@ router.get('/data/:page', function(req, res, next){
   Odtw.find({})
   .skip((perPage * page) - perPage)
   .limit(perPage)
-  .exec(function(err, count){
+  .exec(function(err, odtw){
     Odtw.count().exec(function(err, count){
-      if(err) return next(err)
-      res.render('admin/odtw/odtwData', {
-        odtw: odtw,
-        current: page,
-        pages: Math.ceil(count / perPage)
-      });
+      if(err){
+        console.log(err);
+      } else {
+        res.render('admin/odtw/odtwData', {
+          odtw: odtw,
+          current: page,
+          pages: Math.ceil(count / perPage)
+        });
+      }
     });
   });
 
