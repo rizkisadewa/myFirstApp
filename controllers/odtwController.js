@@ -8,9 +8,26 @@ let Odtw = require('../models/odtwModel');
 let Destination = require('../models/destinationModel');
 
 //view data of ODTW
-router.get('/data', function(req, res){
+router.get('/data/:page', function(req, res, next){
+  var perPage = 5;
+  var page = req.params.page || 1;
 
   // pagination
+  Odtw.find({})
+  .skip((perPage * page) - perPage)
+  .limit(perPage)
+  .exec(function(err, count){
+    Odtw.count().exec(function(err, count){
+      if(err) return next(err)
+      res.render('admin/odtw/odtwData', {
+        odtw: odtw,
+        current: page,
+        pages: Math.ceil(count / perPage)
+      });
+    });
+  });
+
+  /*
   Odtw.find({}, function(err, odtw){
     if(err){
       console.log(err);
@@ -19,7 +36,7 @@ router.get('/data', function(req, res){
         odtw: odtw
       });
     }
-  });
+  }); */
 });
 
 //**UPLOAD AN ODTW IMAGE PROFILE
