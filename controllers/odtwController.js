@@ -10,6 +10,7 @@ let Destination = require('../models/destinationModel');
 //view data of ODTW
 router.get('/data', function(req, res){
 
+  // pagination
   Odtw.find({}, function(err, odtw){
     if(err){
       console.log(err);
