@@ -46,7 +46,12 @@
     <div class="col-md-3">
       <% if (pages > 0) { %>
       <ul class="pagination pagination-sm">
-        <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>
+        <% if (current == 1) { %>
+          <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>
+        <% } else { %>
+          <li><a href="/admin/odtw/data/page-<%= current  %>"><i class="fa fa-angle-left"></i></a></li>
+        <% } %>
+
         <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
         <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
           <% if (i == current) { %>
@@ -55,7 +60,11 @@
             <li><a href="/admin/odtw/data/page-<%= i %>"><%= i %></a></li>
           <% } %>
         <% } %>
-        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+        <% if (current == pages) { %>
+          <li class="disabled"><a href="#"><i class="fa fa-angle-right"></i></a></li>
+        <% } else { %>
+          <li><a href="/admin/odtw/data/page-<%= current %>"><i class="fa fa-angle-right"></i></a></li>
+        <% } %>
       </ul>
     </div>
     <% } %>
