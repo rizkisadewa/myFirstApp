@@ -58,12 +58,9 @@ $(document).ready(function(){
         $("#cart-target").append(row);
 
       }
-
       // draw the user's attention to it
       row.fadeOut();
       row.fadeIn();
-
-
 
     });
 
@@ -72,43 +69,5 @@ $(document).ready(function(){
     $(".odtw_opt").click(function () {
       // alert("Test");
     });
-
-  // //**GET DATA OBJECT OPTION
-  //
-  // $('.odtw_opt').on('click', function(e){
-  //   console.log($(e.target));
-  //   $target_odtw_opt = $(e.target).removeClass("btn btn-success btn-xs odtw_opt").addClass("btn btn-danger btn-xs odtw_opt_del").text("Hapus Pilihan");
-  //   const odtw_opt_id = $target_odtw_opt.parents("tr");
-  //   console.log(odtw_opt_id);
-  //
-  //   // change the buton
-  //
-  //
-  //   // insert to target chosen
-  //   $("#target-chosen").append(odtw_opt_id.clone(true));
-  //   // odtw_opt_id.remove();
-  //   e.preventDefault();
-  //
-  // });
-  //
-  // //**GET DATA OBJECT CHOSEN
-  // $('.odtw_opt_del').on('click', function(){
-  //
-  //   alert("Hello");
-  //
-  //
-  //   $target_odtw_del = $(e.target);
-  //   const odtw_odtw_del = $target_odtw_del.parents("tr");
-  //
-  //   // change the Button
-  //   $target_odtw_del.removeClass("btn btn-danger btn-xs odtw_opt_del").addClass("btn btn-success btn-xs odtw_opt").text("Pilih");
-  //
-  //   // put back to the cart
-  //   $("#cart-target").append(odtw_opt_del.clone(true));
-  //   odtw_opt_del.remove();
-  //   e.preventDefault();
-  //
-  //
-  // });
 
 });
