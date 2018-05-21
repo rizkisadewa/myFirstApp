@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -9,14 +8,13 @@ let Admin = require('../models/adminModel');
 
 // *** dashboard *** //
 //dashboard router
-router.get('/', ensureAuthenticated, function(req, res){
-  res.render('admin/administrator/dashboard');
-});
+router.get('/', ensureAuthenticated, (req, res)=>
+  res.render('admin/administrator/dashboard'));
 
 
 // *** data admin *** //
 // ** admin data view router
-router.get('/data', ensureAuthenticated, function(req, res){
+router.get('/data', ensureAuthenticated, (req, res) => {
   /*
   // *** Testing JSON *** //
   var admin = [
@@ -39,7 +37,7 @@ router.get('/data', ensureAuthenticated, function(req, res){
     admin: admin
   });
   */
-  Admin.find({}, function(err, admins){
+  Admin.find({}, (err, admins)=>{
     if(err){
       console.log(err);
     } else {
@@ -53,12 +51,11 @@ router.get('/data', ensureAuthenticated, function(req, res){
 
 // ** add admin data
 // router
-router.get('/add', ensureAuthenticated, function(req, res){
-  res.render('admin/administrator/adminAdd');
-});
+router.get('/add', ensureAuthenticated, (req, res)=>
+  res.render('admin/administrator/adminAdd'));
 
 //Add submit POST route
-router.post('/add', function(req, res){
+router.post('/add', (req, res)=>{
 
   let admin = new Admin();
   admin.adminNo = req.body.adminNo;
@@ -82,7 +79,7 @@ router.post('/add', function(req, res){
 
 // ** update admin
 // router of load edit form
-router.get('/edit/:id', ensureAuthenticated, function(req, res){
+router.get('/edit/:id', ensureAuthenticated, (req, res)=>{
   Admin.findById(req.params.id, function(err, admin){
     res.render('admin/administrator/adminEdit',{
       //title: 'Edit Admin',
@@ -94,7 +91,7 @@ router.get('/edit/:id', ensureAuthenticated, function(req, res){
 });
 
 //Update submit POST route
-router.post('/edit/:id', function(req, res){
+router.post('/edit/:id', (req, res)=>{
 
   let admin = {};
   admin.adminNo = req.body.adminNo;
@@ -118,10 +115,10 @@ router.post('/edit/:id', function(req, res){
 });
 
 // Admin Delete
-router.delete('/data/:id', function(req, res){
+router.delete('/data/:id', (req, res)=>{
   let query = {_id:req.params.id}
 
-  Admin.remove(query, function(err){
+  Admin.remove(query, (err)=>{
     if(err){
       console.log(err);
     }
@@ -132,12 +129,11 @@ router.delete('/data/:id', function(req, res){
 });
 
 // Admin Register
-router.get('/register', function(req, res){
-  res.render('admin/register');
-});
+router.get('/register', (req, res)=>
+  res.render('admin/register'));
 
 //Register Process
-router.post('/register', function(req, res){
+router.post('/register', (req, res)=>{
 
   const adminNo = req.body.adminNo;
   const name = req.body.name;
@@ -154,13 +150,13 @@ router.post('/register', function(req, res){
   });
 
   //encrypted the Password
-  bcrypt.genSalt(10, function(err, salt){
-    bcrypt.hash(newUser.password, salt, function(err, hash){
+  bcrypt.genSalt(10, (err, salt)=>{
+    bcrypt.hash(newUser.password, salt, (err, hash)=>{
       if(err){
         console.log(err);
       } else {
         newUser.password = hash;
-        newUser.save(function(err){
+        newUser.save((err)=>{
           if(err){
             console.log(err);
             return;
@@ -177,12 +173,12 @@ router.post('/register', function(req, res){
 });
 
 // Login Form
-router.get('/login', function(req, res){
+router.get('/login', (req, res)=>{
   res.render('admin/login');
 });
 
 // Login Process
-router.post('/login', function(req, res, next){
+router.post('/login', (req, res, next)=>{
   passport.authenticate('local', {
     successRedirect: '/admin',
     failureRedirect: '/admin/login',
@@ -191,7 +187,7 @@ router.post('/login', function(req, res, next){
 });
 
 // Logout
-router.get('/logout', function(req, res){
+router.get('/logout', (req, res)=>{
   req.logout();
   req.flash('success', 'You are logged out');
   res.redirect('/admin/login');
