@@ -15,14 +15,12 @@ mongoose.connect(config.database);
 let db = mongoose.connection;
 
 //check connection
-db.once('open', function(){
-  console.log('Connected to MongoDB');
-});
+db.once('open', ()=>
+  console.log('Connected to MongoDB'));
 
 //check for DB errors
-db.on('error', function(err){
-  console.log(err);
-});
+db.on('error', (err)=>
+  console.log(err));
 
 //body parser Middleware
 // parse application/x-www-form-urlencoded
@@ -51,9 +49,10 @@ app.use(session({
 //Express Messages Middleware
 //For the message notification
 app.use(require('connect-flash')());
-app.use(function (req, res, next) {
+app.use((req, res, next) =>{
   res.locals.messages = require('express-messages')(req, res);
   next();
+
 });
 
 // Express Validator Middleware
@@ -81,9 +80,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //set global admin variable
-app.get('*', function(req, res, next){
+app.get('*', (req, res, next) =>{
   res.locals.admin = req.user || null;
-  next();
+  next()
 });
 
 //Fire Controller
@@ -97,6 +96,5 @@ let index = require('./controllers/indexController');
 app.use('', index);
 
 //Start Server
-app.listen(3000, function(){
-  console.log('Server started on port 3000 . . .');
-});
+app.listen(3000, ()=>
+  console.log('Server started on port 3000 . . .'));
