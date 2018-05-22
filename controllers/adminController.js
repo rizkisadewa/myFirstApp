@@ -14,6 +14,7 @@ class adminController {
     this.login();
     this.logout();
     this.checkValidasi();
+
   }
 
   importModel(){
@@ -24,14 +25,14 @@ class adminController {
   startAdmin(){
     // *** dashboard *** //
     //dashboard router
-    router.get('/', ensureAuthenticated, (req, res)=>
+    router.get('/', (req, res)=>
       res.render('admin/administrator/dashboard'));
   }
 
   melihatAdmin(){
     // *** data admin *** //
     // ** admin data view router
-    router.get('/data', ensureAuthenticated, (req, res) => {
+    router.get('/data', (req, res) => {
       /*
       // *** Testing JSON *** //
       var admin = [
@@ -68,10 +69,13 @@ class adminController {
   }
 
   memasukkanAdmin(){
+
     // ** add admin data
     // router
-    router.get('/add', ensureAuthenticated, (req, res)=>
-      res.render('admin/administrator/adminAdd'));
+    router.get('/add', (req, res)=>{
+      checkValidasi();
+      res.render('admin/administrator/adminAdd');
+    });
 
     //Add submit POST route
     router.post('/add', (req, res)=>{
@@ -145,7 +149,7 @@ class adminController {
   mengubahAdmin(){
     // ** update admin
     // router of load edit form
-    router.get('/edit/:id', ensureAuthenticated, (req, res)=>{
+    router.get('/edit/:id', (req, res)=>{
       Admin.findById(req.params.id, function(err, admin){
         res.render('admin/administrator/adminEdit',{
           //title: 'Edit Admin',
@@ -222,15 +226,12 @@ class adminController {
     });
   }
 
-  checkValidasi(){
-    // Access Control
-    function ensureAuthenticated(req, res, next){
-      if (req.isAuthenticated()) {
-        return next();
-      } else {
-        req.flash('danger', 'Please Login as an Admin');
-        res.redirect('/admin/login');
-      }
+  checkValidasi(req, res, next){
+    if (req.isAuthenticated()) {
+      return next();
+    } else {
+      req.flash('danger', 'Please Login as an Admin');
+      res.redirect('/admin/login');
     }
   }
 
