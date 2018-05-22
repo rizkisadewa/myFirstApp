@@ -13,7 +13,7 @@ class adminController {
     this.startAdmin();
     this.login();
     this.logout();
-    this.checkValidasi();
+    //this.checkValidasi();
 
   }
 
@@ -226,14 +226,14 @@ class adminController {
     });
   }
 
-  checkValidasi(req, res, next){
-    if (req.isAuthenticated()) {
-      return next();
-    } else {
-      req.flash('danger', 'Please Login as an Admin');
-      res.redirect('/admin/login');
-    }
-  }
+  // checkValidasi(req, res, next){
+  //   if (req.isAuthenticated()) {
+  //     return next();
+  //   } else {
+  //     req.flash('danger', 'Please Login as an Admin');
+  //     res.redirect('/admin/login');
+  //   }
+  // }
 
 }
 

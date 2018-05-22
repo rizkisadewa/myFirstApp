@@ -15,7 +15,7 @@ class Server {
     this.initDB();
     this.initViewEngine();
     this.initExpressMiddleware();
-    this.initRoutes();
+    this.initController();
     this.start();
   }
 
@@ -92,7 +92,7 @@ class Server {
     });
   }
 
-  initRoutes(){
+  initController(){
     //Fire Controller
     let admin = require('./controllers/adminController');
     app.use('/admin', admin);
@@ -102,6 +102,7 @@ class Server {
     app.use('/admin/destination', destination);
     let index = require('./controllers/indexController');
     app.use('', index);
+
   }
 
   initDB(){
