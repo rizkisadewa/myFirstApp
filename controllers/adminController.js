@@ -11,8 +11,8 @@ class adminController {
     this.menghapusAdmin();
     this.melihatAdmin();
     this.startAdmin();
-    this.login();
-    this.logout();
+    //this.login();
+    //this.logout();
     //this.checkValidasi();
 
   }
@@ -201,6 +201,15 @@ class adminController {
     });
   }
 
+}
+
+class checkValidasi {
+  constructor() {
+    this.login();
+    this.logout();
+    //this.checkValidasi();
+  }
+
   login(){
     // Login Form
     router.get('/login', (req, res)=>{
@@ -226,11 +235,10 @@ class adminController {
     });
   }
 
-
 }
 
 // Access Control
-function ensureAuthenticated(req, res, next){
+let ensureAuthenticated = function(req, res, next){
   if (req.isAuthenticated()) {
     return next();
   } else {
