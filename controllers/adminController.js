@@ -25,14 +25,14 @@ class adminController {
   startAdmin(){
     // *** dashboard *** //
     //dashboard router
-    router.get('/', (req, res)=>
+    router.get('/', ensureAuthenticated, (req, res)=>
       res.render('admin/administrator/dashboard'));
   }
 
   melihatAdmin(){
     // *** data admin *** //
     // ** admin data view router
-    router.get('/data', (req, res) => {
+    router.get('/data', ensureAuthenticated, (req, res) => {
       /*
       // *** Testing JSON *** //
       var admin = [
@@ -72,7 +72,7 @@ class adminController {
 
     // ** add admin data
     // router
-    router.get('/add', (req, res)=>{
+    router.get('/add', ensureAuthenticated, (req, res)=>{
       checkValidasi();
       res.render('admin/administrator/adminAdd');
     });
@@ -149,7 +149,7 @@ class adminController {
   mengubahAdmin(){
     // ** update admin
     // router of load edit form
-    router.get('/edit/:id', (req, res)=>{
+    router.get('/edit/:id', ensureAuthenticated, (req, res)=>{
       Admin.findById(req.params.id, function(err, admin){
         res.render('admin/administrator/adminEdit',{
           //title: 'Edit Admin',
@@ -187,7 +187,7 @@ class adminController {
 
   menghapusAdmin(){
     // Admin Delete
-    router.delete('/data/:id', (req, res)=>{
+    router.delete('/data/:id', ensureAuthenticated, (req, res)=>{
       let query = {_id:req.params.id}
 
       Admin.remove(query, (err)=>{
@@ -226,15 +226,17 @@ class adminController {
     });
   }
 
-  // checkValidasi(req, res, next){
-  //   if (req.isAuthenticated()) {
-  //     return next();
-  //   } else {
-  //     req.flash('danger', 'Please Login as an Admin');
-  //     res.redirect('/admin/login');
-  //   }
-  // }
 
+}
+
+// Access Control
+function ensureAuthenticated(req, res, next){
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    req.flash('danger', 'Please Login as an Admin');
+    res.redirect('/admin/login');
+  }
 }
 
 new adminController();
