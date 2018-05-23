@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
-class adminController {
+class mengelolaAdmin {
   constructor() {
     this.importModel();
     this.memasukkanAdmin();
@@ -11,10 +11,6 @@ class adminController {
     this.menghapusAdmin();
     this.melihatAdmin();
     this.startAdmin();
-    //this.login();
-    //this.logout();
-    //this.checkValidasi();
-
   }
 
   importModel(){
@@ -247,6 +243,6 @@ let ensureAuthenticated = function(req, res, next){
   }
 }
 
-new adminController();
+new mengelolaAdmin();
 
 module.exports = router;
