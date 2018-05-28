@@ -5,39 +5,7 @@ const router = express.Router();
 let Destination = require('../models/destinationModel');
 
 //add Destination Load Form
-router.get('/add', function(req, res){
-
-  /*
-  var destinations = [
-    {
-     country_name : "Indonesia",
-     province : [
-       {province_name: "Bali", prov_lat: "1.3", prov_lng:"3.2"},
-       {province_name: "Jawa Barat", prov_lat: "1.3", prov_lng:"3.2"}
-     ],
-     area : "Gianyar",
-     dest_lat : "1.0",
-     dest_lng : "3.0"
-   },
-
-   {
-    country_name : "Thailand",
-    province : [
-      {province_name: "Bangkok", prov_lat: "1.3", prov_lng:"3.2"},
-      {province_name: "Pataya", prov_lat: "1.3", prov_lng:"3.2"}
-    ],
-    area : "Gianyar",
-    dest_lat : "1.0",
-    dest_lng : "3.0"
-  }
-
-  ];
-  res.render('admin/destination/destinationAdd', {
-    destination : destinations
-  });
-  */
-
-
+router.get('/add', (req, res)=>{
 
   Destination.find({}, function(err, destination){
     if (err) {
@@ -52,7 +20,7 @@ router.get('/add', function(req, res){
 });
 
 //Add submit POST route
-router.post('/add', function(req, res){
+router.post('/add', (req, res)=>{
 
   // add country only
   let destination = new Destination();
@@ -77,7 +45,7 @@ router.post('/add', function(req, res){
 
 // push the array collection of Province
 
-router.post('/add/province', function(req, res){
+router.post('/add/province', (req, res)=>{
   let destination = {};
 
   destination.country_name = req.body.selectedCountry;
@@ -109,7 +77,7 @@ router.post('/add/province', function(req, res){
 });
 
 //Edit submit POST router
-router.post('/edit/:id', function(req, res){
+router.post('/edit/:id', (req, res)=>{
 
   let destination = {};
   destination.country_name = req.body.country;
@@ -130,7 +98,7 @@ router.post('/edit/:id', function(req, res){
 });
 
 //Edit for Province submit POST router
-router.post('/edit/:id', function(req, res){
+router.post('/edit/:id', (req, res)=>{
 
   let destination = {};
   destination.country_name = req.body.country;
@@ -151,7 +119,7 @@ router.post('/edit/:id', function(req, res){
 });
 
 // Destination Delete
-router.delete('/add/:id', function(req, res){
+router.delete('/add/:id', (req, res)=>{
 
   let query = {_id:req.params.id}
 
@@ -165,7 +133,7 @@ router.delete('/add/:id', function(req, res){
   });
 });
 
-router.delete('/add/province/:id', function(req, res){
+router.delete('/add/province/:id', (req, res)=>{
   let query = {_id:req.params.id}
 
   Destination.update(

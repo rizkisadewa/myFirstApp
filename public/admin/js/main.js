@@ -192,10 +192,19 @@ function initMap() {
 }
 
 // Show Marker
-
 var show_pointer = document.getElementById('show-pointer');
 if (show_pointer) {
   show_pointer.addEventListener('click', checkPointer);
+}
+
+// Removes the markers from the map, but keeps them in the array.
+var delete_pointer = document.getElementById('delete-pointer');
+if (delete_pointer) {
+  delete_pointer.addEventListener('click', clearMarkers);
+}
+
+function clearMarkers() {
+  setMapOnAll(null);
 }
 
 function checkPointer(){
@@ -336,7 +345,7 @@ function clearMap() {
 $(document).ready(function() {
     $('#clear-map').click(clearMap);
 
-    
+
     // Start GA
     $('#show-route').click(function() {
         if (nodes.length < 2) {

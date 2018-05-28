@@ -8,7 +8,7 @@ let Odtw = require('../models/odtwModel');
 let Destination = require('../models/destinationModel');
 
 //view data of ODTW
-router.get('/data/page-:page', function(req, res){
+router.get('/data/page-:page', (req, res)=>{
   var perPage = 5;
   var page = req.params.page || 1;
 
@@ -30,16 +30,6 @@ router.get('/data/page-:page', function(req, res){
     });
   });
 
-  /*
-  Odtw.find({}, function(err, odtw){
-    if(err){
-      console.log(err);
-    } else {
-      res.render('admin/odtw/odtwData', {
-        odtw: odtw
-      });
-    }
-  }); */
 });
 
 //**UPLOAD AN ODTW IMAGE PROFILE
@@ -84,7 +74,7 @@ cloudinary.config({
 });
 
 //add ODTW
-router.get('/add', function(req, res){
+router.get('/add', (req, res)=>{
 
   Destination.find({}, function(err, destination){
     if(err){
@@ -98,7 +88,7 @@ router.get('/add', function(req, res){
 
 });
 
-router.post('/add', upload.single('image') , function(req, res){
+router.post('/add', upload.single('image') , (req, res)=>{
 
   cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
     if(err) {
@@ -126,7 +116,7 @@ router.post('/add', upload.single('image') , function(req, res){
 
 //edit data of ODTW
 // router of load edit form
-router.get('/edit/:id', function(req, res){
+router.get('/edit/:id', (req, res)=>{
 
   Odtw.findById(req.params.id, function(err, odtw){
     res.render('admin/odtw/odtwEdit',{
@@ -138,7 +128,7 @@ router.get('/edit/:id', function(req, res){
 });
 
 
-router.post("/edit/:id", upload.single('image'), function(req, res){
+router.post("/edit/:id", upload.single('image'), (req, res)=>{
   // if a new file has been uploaded
   if(req.file){
     Odtw.findById(req.params.id, function(err, odtw){
@@ -190,7 +180,7 @@ router.post("/edit/:id", upload.single('image'), function(req, res){
 });
 
 // Spot Delete
-router.delete('/data/:id', function(req, res){
+router.delete('/data/:id', (req, res)=>{
   let query = {_id:req.params.id}
 
   Odtw.findById(req.params.id, function(err, odtw){
@@ -218,7 +208,7 @@ router.delete('/data/:id', function(req, res){
 });
 
 // router of data single odtws
-router.get('/view/:id', function(req, res){
+router.get('/view/:id', (req, res)=>{
 
   Odtw.findById(req.params.id, function(err, odtw){
     res.render('admin/odtw/odtwView',{

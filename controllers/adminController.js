@@ -4,48 +4,49 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 class administrator {
-  constructor() {
-
-  }
-
   set adminNo(adminNo){
-    this.adminNo = adminNo;
+    adminNo = req.body.adminNo;
+    this._adminNo = adminNo;
   }
 
   get adminNo(){
-    return this.adminNo;
+    return this._adminNo;
   }
 
   set name(name){
-    this.name = name;
+    name = req.body.name;
+    this._name = name;
   }
 
   get name(){
-    return this.name;
+    return this._name;
   }
 
   set username(username){
-    this.username = username;
+    username = req.body.username;
+    this._username = username;
   }
 
   get username(){
-    return this.username;
+    return this._username;
   }
 
   set password(password){
-    this.password = password;
+    password = req.body.password;
+    this._password = password;
   }
 
   get password(){
-    return this.password;
+    return this._password;
   }
 
   set accessType(accessType){
-    this.accessType = accessType;
+    accessType = req.body.accessType;
+    this._accessType = accessType;
   }
 
   get accessType(){
-    return this.accessType
+    return this._accessType
   }
 
 }
@@ -65,6 +66,7 @@ class mengelolaAdmin extends administrator {
   importModel(){
     //Bring in Models
     let Admin = require('../models/adminModel');
+    return Admin;
   }
 
   startAdmin(){
@@ -100,7 +102,9 @@ class mengelolaAdmin extends administrator {
         admin: admin
       });
       */
-      Admin.find({}, (err, admins)=>{
+
+      var admin = new mengelolaAdmin();
+      admin.importModel().find({}, (err, admins)=>{
         if(err){
           console.log(err);
         } else {
@@ -118,20 +122,14 @@ class mengelolaAdmin extends administrator {
     // ** add admin data
     // router
     router.get('/add', ensureAuthenticated, (req, res)=>{
-      checkValidasi();
       res.render('admin/administrator/adminAdd');
     });
 
     //Add submit POST route
     router.post('/add', (req, res)=>{
 
-      let admin = new importModel();
-      administrator.adminNo = req.body.adminNo;
-      administrator.name = req.body.name;
-      administrator.username = req.body.username;
-      administrator.password = req.body.password;
-      administrator.accessType = req.body.accessType;
-
+      let admin = new mengelolaAdmin();
+      
       admin.save(function(err){
         if(err){
           console.log(err);
