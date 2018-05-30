@@ -9,6 +9,7 @@ class administrator {
   }
 
   set adminNo(adminNo){
+    adminNo = req.body.adminNo;
     this.adminNo = adminNo;
   }
 
