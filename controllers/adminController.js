@@ -7,56 +7,8 @@ const passport = require('passport');
 const Admin = require('../models/adminModel');
 
 class administrator {
-  constructor() {
-
-  }
-
-  set adminNo(adminNo){
-    this.adminNo = adminNo;
-  }
-
-  get adminNo(){
-    return this.adminNo;
-  }
-
-  set name(name){
-    this.name = name;
-  }
-
-  get name(){
-    return this.name;
-  }
-
-  set username(username){
-    this.adminNo = username;
-  }
-
-  get username(){
-    return this.username;
-  }
-
-  set password(password){
-    this.password = password;
-  }
-
-  get password(){
-    return this.password;
-  }
-
-  set accessType(accessType){
-    this.accessType = accessType;
-  }
-
-  get accessType(){
-    return this.accessType
-  }
-
-}
-
-class mengelolaAdmin extends administrator {
 
   constructor() {
-    super();
     this.memasukkanAdmin();
     this.mengubahAdmin();
     this.menghapusAdmin();
@@ -76,28 +28,7 @@ class mengelolaAdmin extends administrator {
     // ** admin data view router
 
     router.get('/data', ensureAuthenticated, (req, res) => {
-      /*
-      // *** Testing JSON *** //
-      var admin = [
-        {
-          adminNo: "Admin 1",
-          name: "Santika",
-          username: "santika",
-          password: "***",
-          accessType: "super user"
-        },
-        {
-          adminNo: "Admin 2",
-          name: "Rizky Sadewa",
-          username: "rizky.sadewa",
-          password: "***",
-          accessType: "admin"
-        }
-      ];
-      res.render('admin/adminData', {
-        admin: admin
-      });
-      */
+
       Admin.find({}, (err, admins)=>{
         if(err){
           console.log(err);
@@ -122,11 +53,12 @@ class mengelolaAdmin extends administrator {
     //Add submit POST route
     router.post('/add', (req, res)=>{
 
-      administrator.adminNo = req.body.adminNo;
-      administrator.name = req.body.name;
-      administrator.username = req.body.username;
-      administrator.password = req.body.password;
-      administrator.accessType = req.body.accessType;
+      let admin = new Admin();
+      admin.adminNo = req.body.adminNo;
+      admin.name = req.body.name;
+      admin.username = req.body.username;
+      admin.password = req.body.password;
+      admin.accessType = req.body.accessType;
 
       admin.save(function(err){
         if(err){
@@ -148,11 +80,12 @@ class mengelolaAdmin extends administrator {
     //Register Process
     router.post('/register', (req, res)=>{
 
-      administrator.adminNo(req.body.adminNo);
-      administrator.name(req.body.name);
-      administrator.username(req.body.username);
-      administrator.password(req.body.password);
-      administrator.accessType(req.body.accessType);
+      let admin = new Admin();
+      admin.adminNo = req.body.adminNo;
+      admin.name = req.body.name;
+      admin.username = req.body.username;
+      admin.password = req.body.password;
+      admin.accessType = req.body.accessType;
 
       let newUser = new Admin({
         adminNo: administrator.adminNo,
@@ -206,11 +139,11 @@ class mengelolaAdmin extends administrator {
     router.post('/edit/:id', (req, res)=>{
 
       let admin = {};
-      administrator.adminNo = req.body.adminNo;
-      administrator.name = req.body.name;
-      administrator.username = req.body.username;
-      administrator.password = req.body.password;
-      administrator.accessType = req.body.accessType;
+      admin.adminNo = req.body.adminNo;
+      admin.name = req.body.name;
+      admin.username = req.body.username;
+      admin.password = req.body.password;
+      admin.accessType = req.body.accessType;
 
       let query = {_id:req.params.id}
 
@@ -289,7 +222,7 @@ let ensureAuthenticated = function(req, res, next){
   }
 }
 
-new mengelolaAdmin();
+new administrator();
 new checkValidasi();
 
 module.exports = router;
