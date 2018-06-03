@@ -132,8 +132,8 @@ function getMap(e) {
     var map_lng = response.data.results[0].geometry.location.lng;
 
     // output to app.
-    console.log('lat'+map_lat);
-    console.log('lng'+map_lng);
+    // console.log('lat  :'+map_lat);
+    // console.log('lng  :'+map_lng);
     var mapToCenter = {lat: map_lat, lng: map_lng};
     map.setCenter(mapToCenter);
 
@@ -166,29 +166,6 @@ function initMap() {
     zoom: 10
   });
 
-  /*
-  // Create map click event
-  google.maps.event.addListener(map, 'click', function(event) {
-      // Add destination (max 9)
-      if (nodes.length >= 9) {
-          alert('Max destinations added');
-          return;
-      }
-
-      // If there are directions being shown, clear them
-      clearDirections();
-
-      // Add a node to map
-      marker = new google.maps.Marker({position: event.latLng, map: map});
-      markers.push(marker);
-
-      // Store node's lat and lng
-      nodes.push(event.latLng);
-
-      // Update destination count
-      $('#destinations-count').html(nodes.length);
-  });
-  */
 }
 
 // Show Marker
@@ -199,22 +176,21 @@ if (show_pointer) {
 
 // Removes the markers from the map, but keeps them in the array.
 var delete_pointer = document.getElementById('delete-pointer');
-if (delete_pointer) {
-  delete_pointer.addEventListener('click', clearMarkers);
+delete_pointer.addEventListener('click', deleteMarkers);
+
+function clickMe(){
+  alert("Hello");
 }
 
-function clearMarkers() {
-  setMapOnAll(null);
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  nodes = [];
+  markers = [];
 }
 
 function checkPointer(){
 
-  markers = [];
-  nodes = [];
-
-
   // Multiple Markers from HTML Table id "target-chosen" change into array
-
   var table = document.getElementById("target-chosen");
   var rows = table.children;
   for (var i = 0; i < rows.length; i++) {
@@ -235,7 +211,6 @@ function checkPointer(){
 
   // Display multiple markers on a map
   var infoWindow = new google.maps.InfoWindow(), marker, k;
-  markerTotal = 0;
   markerTotal = markers.length;
 
   // Loop through our array of markers & place each one on the map
@@ -257,6 +232,14 @@ function checkPointer(){
 
   }
 
+
+}
+
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
 }
 
 // GA Algorithm
@@ -292,25 +275,10 @@ function getDurations(callback) {
 }
 
 // Removes markers and temporary paths
-// function clearMapMarkers() {
-//     for (index in markers) {
-//         markers[index].setMap(null);
-//     }
-//
-//     prevNodes = nodes;
-//     nodes = [];
-//
-//     if (polylinePath != undefined) {
-//         polylinePath.setMap(null);
-//     }
-//
-//     markers = [];
-//
-//     $('#ga-buttons').show();
-// }
-
-// Removes markers and temporary paths using the button "Lihat Rute"
-function clearMapMarkersFromButton() {
+function clearMapMarkers() {
+    // for (index in markers) {
+    //     markers[index].setMap(null);
+    // }
 
     prevNodes = nodes;
     nodes = [];
@@ -323,6 +291,7 @@ function clearMapMarkersFromButton() {
 
     $('#ga-buttons').show();
 }
+
 
 // Removes map directions
 function clearDirections() {
@@ -426,7 +395,7 @@ $(document).ready(function() {
                     if (status == google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setDirections(response);
                     }
-                    clearMapMarkersFromButton();
+                    clearMapMarkers();
                 });
 
             });

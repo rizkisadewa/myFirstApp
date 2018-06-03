@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
+<<<<<<< HEAD
 class administrator {
   set adminNo(adminNo){
     adminNo = req.body.adminNo;
@@ -55,6 +56,10 @@ class mengelolaAdmin extends administrator {
 
   constructor() {
     super();
+=======
+class mengelolaAdmin {
+  constructor() {
+>>>>>>> parent of ea5f5a8... adminController: adding class of administrator and mengelolaadmin
     this.importModel();
     this.memasukkanAdmin();
     this.mengubahAdmin();
@@ -128,8 +133,18 @@ class mengelolaAdmin extends administrator {
     //Add submit POST route
     router.post('/add', (req, res)=>{
 
+<<<<<<< HEAD
       let admin = new mengelolaAdmin();
       
+=======
+      let admin = new Admin();
+      admin.adminNo = req.body.adminNo;
+      admin.name = req.body.name;
+      admin.username = req.body.username;
+      admin.password = req.body.password;
+      admin.accessType = req.body.accessType;
+
+>>>>>>> parent of ea5f5a8... adminController: adding class of administrator and mengelolaadmin
       admin.save(function(err){
         if(err){
           console.log(err);
@@ -150,11 +165,11 @@ class mengelolaAdmin extends administrator {
     //Register Process
     router.post('/register', (req, res)=>{
 
-      administrator.adminNo = req.body.adminNo;
-      administrator.name = req.body.name;
-      administrator.username = req.body.username;
-      administrator.password = req.body.password;
-      administrator.accessType = req.body.accessType;
+      const adminNo = req.body.adminNo;
+      const name = req.body.name;
+      const username = req.body.username;
+      const password = req.body.password;
+      const accessType = req.body.accessType;
 
       let newUser = new Admin({
         adminNo: adminNo,
@@ -207,11 +222,11 @@ class mengelolaAdmin extends administrator {
     router.post('/edit/:id', (req, res)=>{
 
       let admin = {};
-      administrator.adminNo = req.body.adminNo;
-      administrator.name = req.body.name;
-      administrator.username = req.body.username;
-      administrator.password = req.body.password;
-      administrator.accessType = req.body.accessType;
+      admin.adminNo = req.body.adminNo;
+      admin.name = req.body.name;
+      admin.username = req.body.username;
+      admin.password = req.body.password;
+      admin.accessType = req.body.accessType;
 
       let query = {_id:req.params.id}
 
@@ -291,6 +306,5 @@ let ensureAuthenticated = function(req, res, next){
 }
 
 new mengelolaAdmin();
-new checkValidasi();
 
 module.exports = router;
