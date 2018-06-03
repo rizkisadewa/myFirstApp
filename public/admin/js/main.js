@@ -253,7 +253,8 @@ function showMyLocation(){
     onSuccess: ({ coords: { latitude: lat, longitude: lng } }) => {
       marker.setPosition({ lat, lng });
       map.panTo({ lat, lng });
-
+      nodes.push(marker.position);
+      console.log(nodes);
     },
     onError: err => {
       console.log(err);
@@ -272,8 +273,8 @@ if (show_pointer) {
 
 function checkPointer(){
 
-  markers = [];
-  nodes = [];
+  // markers = [];
+  // nodes = [];
 
 
   // Multiple Markers from HTML Table id "target-chosen" change into array
