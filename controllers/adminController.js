@@ -3,13 +3,15 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
+// bring the models
+const Admin = require('../models/adminModel');
+
 class administrator {
   constructor() {
 
   }
 
   set adminNo(adminNo){
-    adminNo = req.body.adminNo;
     this.adminNo = adminNo;
   }
 
@@ -26,7 +28,7 @@ class administrator {
   }
 
   set username(username){
-    this.username = username;
+    this.adminNo = username;
   }
 
   get username(){
@@ -55,17 +57,11 @@ class mengelolaAdmin extends administrator {
 
   constructor() {
     super();
-    this.importModel();
     this.memasukkanAdmin();
     this.mengubahAdmin();
     this.menghapusAdmin();
     this.melihatAdmin();
     this.startAdmin();
-  }
-
-  importModel(){
-    //Bring in Models
-    let Admin = require('../models/adminModel');
   }
 
   startAdmin(){
@@ -78,6 +74,7 @@ class mengelolaAdmin extends administrator {
   melihatAdmin(){
     // *** data admin *** //
     // ** admin data view router
+
     router.get('/data', ensureAuthenticated, (req, res) => {
       /*
       // *** Testing JSON *** //
@@ -119,14 +116,12 @@ class mengelolaAdmin extends administrator {
     // ** add admin data
     // router
     router.get('/add', ensureAuthenticated, (req, res)=>{
-      checkValidasi();
       res.render('admin/administrator/adminAdd');
     });
 
     //Add submit POST route
     router.post('/add', (req, res)=>{
 
-      let admin = new importModel();
       administrator.adminNo = req.body.adminNo;
       administrator.name = req.body.name;
       administrator.username = req.body.username;
@@ -153,18 +148,18 @@ class mengelolaAdmin extends administrator {
     //Register Process
     router.post('/register', (req, res)=>{
 
-      administrator.adminNo = req.body.adminNo;
-      administrator.name = req.body.name;
-      administrator.username = req.body.username;
-      administrator.password = req.body.password;
-      administrator.accessType = req.body.accessType;
+      administrator.adminNo(req.body.adminNo);
+      administrator.name(req.body.name);
+      administrator.username(req.body.username);
+      administrator.password(req.body.password);
+      administrator.accessType(req.body.accessType);
 
       let newUser = new Admin({
-        adminNo: adminNo,
-        name: name,
-        username: username,
-        password: password,
-        accessType: accessType
+        adminNo: administrator.adminNo,
+        name: administrator.name,
+        username: administrator.username,
+        password: administrator.password,
+        accessType: administrator.accessType
       });
 
       //encrypted the Password
@@ -195,6 +190,7 @@ class mengelolaAdmin extends administrator {
   mengubahAdmin(){
     // ** update admin
     // router of load edit form
+
     router.get('/edit/:id', ensureAuthenticated, (req, res)=>{
       Admin.findById(req.params.id, function(err, admin){
         res.render('admin/administrator/adminEdit',{
