@@ -143,6 +143,7 @@ function getMap(e) {
     console.log(error);
   });
 
+
 }
 
 // DECLARATION FOR GA Algorithm
@@ -191,8 +192,72 @@ function initMap() {
   */
 }
 
-// Show Marker
+// ** SHOW MY AREA
+var show_my_location = document.getElementById('show-my-location');
+if (show_my_location) {
+  show_my_location.addEventListener('click', showMyLocation);
+}
 
+function showMyLocation(){
+  /**
+   * Create google maps Map instance.
+   * @param {number} lat
+   * @param {number} lng
+   * @return {Object}
+   */
+  const createMap = ({ lat, lng }) => {
+    return new google.maps.Map(document.getElementById('map'), {
+      center: { lat, lng },
+      zoom: 10
+    });
+  };
+
+  /**
+   * Create google maps Marker instance.
+   * @param {Object} map
+   * @param {Object} position
+   * @return {Object}
+   */
+  const createMarker = ({ map, position }) => {
+    return new google.maps.Marker({ map, position });
+  };
+
+  /**
+   * Track the user location.
+   * @param {Object} onSuccess
+   * @param {Object} [onError]
+   * @return {number}
+   */
+  const trackLocation = ({ onSuccess, onError = () => { } }) => {
+    if ('geolocation' in navigator === false) {
+      return onError(new Error('Geolocation is not supported by your browser.'));
+    }
+
+    return navigator.geolocation.watchPosition(onSuccess, onError, {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    });
+  };
+
+  let initialPosition = { lat: 59.32, lng: 17.84 };
+  let map = createMap(initialPosition);
+  let marker = createMarker({ map, position: initialPosition });
+
+
+  let watchId = trackLocation({
+    onSuccess: ({ coords: { latitude: lat, longitude: lng } }) => {
+      marker.setPosition({ lat, lng });
+      map.panTo({ lat, lng });
+
+    }
+  });
+
+  nodes.push(marker);
+}
+
+
+// Show Marker
 var show_pointer = document.getElementById('show-pointer');
 if (show_pointer) {
   show_pointer.addEventListener('click', checkPointer);
@@ -223,6 +288,7 @@ function checkPointer(){
 
   }
   // console.log(markers.length);
+
 
   // Display multiple markers on a map
   var infoWindow = new google.maps.InfoWindow(), marker, k;
@@ -336,7 +402,7 @@ function clearMap() {
 $(document).ready(function() {
     $('#clear-map').click(clearMap);
 
-    
+
     // Start GA
     $('#show-route').click(function() {
         if (nodes.length < 2) {
