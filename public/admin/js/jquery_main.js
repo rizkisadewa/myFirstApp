@@ -13,7 +13,7 @@ $(document).ready(function(){
         url: '/admin/odtw/data/'+odtw_id,
         success: function(response){
           alert('Spot has been deleted');
-          window.location.href='/admin/odtw/data';
+          window.location.href='/admin/odtw/data/page-1';
         },
         error: function(err){
           console.log(err);

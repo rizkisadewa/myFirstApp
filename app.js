@@ -10,7 +10,7 @@ const session = require('express-session');
 const passport = require('passport')
 const config = require('./config/database');
 
-class Server {
+class Main {
   constructor() {
     this.initDB();
     this.initViewEngine();
@@ -122,4 +122,4 @@ class Server {
 
 }
 
-new Server();
+new Main();
