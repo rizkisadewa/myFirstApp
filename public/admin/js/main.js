@@ -155,6 +155,7 @@ var nodes = [];
 var prevNodes = [];
 var durations = [];
 var markers = [];
+var myLocationPosition;
 
 // GOOGLE MAP API
 var map;
@@ -253,8 +254,7 @@ function showMyLocation(){
     onSuccess: ({ coords: { latitude: lat, longitude: lng } }) => {
       marker.setPosition({ lat, lng });
       map.panTo({ lat, lng });
-      nodes.push(marker.position);
-      console.log(nodes);
+      myLocationPosition = marker.position; // store in variable for adding spot
     },
     onError: err => {
       console.log(err);
@@ -272,19 +272,14 @@ if (show_pointer) {
 }
 
 function checkPointer(){
-
-  // markers = [];
-  // nodes = [];
-
-
   // Multiple Markers from HTML Table id "target-chosen" change into array
 
-  var table = document.getElementById("target-chosen");
-  var rows = table.children;
-  for (var i = 0; i < rows.length; i++) {
-    var fields = rows[i].children;
-    var rowArray = [];
-    for (var j = 1; j < 4; j++) {
+  let table = document.getElementById("target-chosen");
+  let rows = table.children;
+  for (let i = 0; i < rows.length; i++) {
+    let fields = rows[i].children;
+    let rowArray = [];
+    for (let j = 1; j < 4; j++) {
       if (j >= 2 ) {
         rowArray.push(parseFloat(fields[j].innerHTML));
       } else {
@@ -305,7 +300,7 @@ function checkPointer(){
 
   // Loop through our array of markers & place each one on the map
   for( k = 0; k < markerTotal; k++ ) {
-      var position = new google.maps.LatLng(markers[k][1], markers[k][2]);
+      let position = new google.maps.LatLng(markers[k][1], markers[k][2]);
 
       marker = new google.maps.Marker({
           position: position,
@@ -317,10 +312,10 @@ function checkPointer(){
       // Store node's lat and lng
       nodes.push(position);
 
-      // Update destination count
-      $('#destinations-count').html(nodes.length);
-
   }
+  nodes.push(myLocationPosition);
+  // Update destination count
+  $('#destinations-count').html(nodes.length);
 
 }
 
@@ -410,7 +405,6 @@ function clearMap() {
 $(document).ready(function() {
     $('#clear-map').click(clearMap);
 
-
     // Start GA
     $('#show-route').click(function() {
         if (nodes.length < 2) {
@@ -471,7 +465,7 @@ $(document).ready(function() {
                 directionsDisplay = new google.maps.DirectionsRenderer();
                 directionsDisplay.setMap(map);
                 var waypts = [];
-                for (let b = 1; b < route.length; b++) {
+                for (let b = 0; b < route.length; b++) {
                     waypts.push({
                         location: nodes[route[b]],
                         stopover: true
