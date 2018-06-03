@@ -3,7 +3,6 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
-<<<<<<< HEAD
 class administrator {
   set adminNo(adminNo){
     adminNo = req.body.adminNo;
@@ -133,10 +132,7 @@ class mengelolaAdmin {
     //Add submit POST route
     router.post('/add', (req, res)=>{
 
-<<<<<<< HEAD
       let admin = new mengelolaAdmin();
-      
-=======
       let admin = new Admin();
       admin.adminNo = req.body.adminNo;
       admin.name = req.body.name;
