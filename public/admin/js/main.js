@@ -199,18 +199,6 @@ if (show_my_location) {
 }
 
 function showMyLocation(){
-  /**
-   * Create google maps Map instance.
-   * @param {number} lat
-   * @param {number} lng
-   * @return {Object}
-   */
-  const createMap = ({ lat, lng }) => {
-    return new google.maps.Map(document.getElementById('map'), {
-      center: { lat, lng },
-      zoom: 10
-    });
-  };
 
   /**
    * Create google maps Marker instance.
@@ -240,20 +228,39 @@ function showMyLocation(){
     });
   };
 
-  let initialPosition = { lat: 59.32, lng: 17.84 };
-  let map = createMap(initialPosition);
-  let marker = createMarker({ map, position: initialPosition });
+  /**
+   * Get position error message from the given error code.
+   * @param {number} code
+   * @return {String}
+   */
+  const getPositionErrorMessage = code => {
+    switch (code) {
+      case 1:
+        return 'Permission denied.';
+      case 2:
+        return 'Position unavailable.';
+      case 3:
+        return 'Timeout reached.';
+    }
+  }
 
+
+  let initialPosition = { lat: 0.7893, lng: 113.9213 };
+  let marker = createMarker({ map, position: initialPosition });
+  // const $info = document.getElementById('info');
 
   let watchId = trackLocation({
     onSuccess: ({ coords: { latitude: lat, longitude: lng } }) => {
       marker.setPosition({ lat, lng });
       map.panTo({ lat, lng });
 
+    },
+    onError: err => {
+      console.log(err);
     }
   });
 
-  nodes.push(marker);
+
 }
 
 
