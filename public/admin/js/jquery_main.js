@@ -1,5 +1,70 @@
 $(document).ready(function(){
 
+  // ** VALIDASI MSG BOX
+  $('.msg').hide();
+
+  function isEmail(email){
+    return /^([a-zA-Z0-9_.+-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/.test(email);
+  }
+
+  $('#form').submit(function(){
+    var kirim = true;
+    $('input').each(function(){
+      var aktif = $(this);
+      var min = parseInt(aktif.attr('min'));
+      var max = parseInt(aktif.attr('max'));
+      var nama = aktif.attr('name');
+
+      aktif.keyup(function(){
+        $(this).removeClass('error');
+        kirim = true;
+      });
+        var isi= aktif.val();
+      // Cek kekosongan
+        if(aktif.hasClass('required') && isi == ""){
+          if(kirim == true) alert("Field "+nama+" harus diisi");
+          aktif.addClass('error');
+          kirim = false;
+        }else
+      // Cek angka
+        if(aktif.hasClass('angka') && /^[0-9- ]*$/.test(isi) == false){
+          if(kirim == true) alert("Field  "+nama+" harus diisi angka");
+          aktif.addClass('error');
+          kirim = false;
+        }else
+      // Cek huruf
+        if(aktif.hasClass('huruf') && /^[a-zA-Z- ]*$/.test(isi) == false){
+          if(kirim == true) alert("Field  "+nama+"  harus diisi huruf");
+          aktif.addClass('error');
+          kirim = false;
+        }else
+      // Cek text a-z atau 0-9
+        if(aktif.hasClass('text') && /^[a-zA-Z0-9-]*$/.test(isi) == false){
+          if(kirim == true) alert("Field  "+nama+"  hanya bisa berisi karakter a-z atau 0-9");
+          aktif.addClass('error');
+          kirim = false;
+        }else
+      // Cek email
+        if(aktif.hasClass('email') && isEmail(isi) == false && isi !== ""){
+          if(kirim == true) alert("Email tidak valid");
+          aktif.addClass('error');
+          kirim = false;
+        }else
+      // Cek panjang huruf
+        if((aktif.hasClass('range')) && (isi.length < min || isi.length > max)){
+          if(kirim == true) alert("Panjang  "+nama+" harus antara 5-10 huruf");
+          aktif.addClass('error');
+          kirim = false;
+        }
+    });
+    if(kirim){
+      return true;
+    }else{
+      $('.error:first').focus();
+      return false;
+    }
+  });
+
   $('.delete-odtw').on('click', function(e){
 
     $target_odtw = $(e.target);

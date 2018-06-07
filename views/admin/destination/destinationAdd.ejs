@@ -15,23 +15,23 @@
         <div role="tabpanel" class="tab-pane fade in active" id="country" aria-labelledby="country-tab">
 
           <!-- Input Country -->
-          <form class="form-horizontal" id="destination-location-input" method="post" action="/admin/destination/add">
+          <form id="form" class="form-horizontal" id="destination-location-input" method="post" action="/admin/destination/add">
             <div class="form-group">
               <label for="focusedinput" class="col-sm-1 control-label">Country</label>
               <div class="col-sm-3">
-                <input type="text" class="form-control1 required" id="location-input" placeholder="Input Country" name="country">
+                <input type="text" class="form-control1 required huruf" id="location-input" placeholder="Input Country" name="country">
                 <span class="msg"></span>
               </div>
 
               <label for="focusedinput" class="col-sm-2 control-label">Country's Latitude</label>
               <div class="col-sm-2">
-                <input type="text" class="form-control1" id="latitudeForm" name="destLat" placeholder="...">
+                <input type="text" class="form-control1 required angka" id="latitudeForm" name="destLat" placeholder="...">
                 <span class="msg"></span>
               </div>
 
               <label for="focusedinput" class="col-sm-2 control-label">Country's Longitude</label>
               <div class="col-sm-2">
-                <input type="text" class="form-control1" id="longitudeForm" name="destLng" placeholder="...">
+                <input type="text" class="form-control1 required angka" id="longitudeForm" name="destLng" placeholder="...">
                 <span class="msg"></span>
               </div>
 
@@ -48,7 +48,7 @@
 
             <div class="row">
               <div class="col-sm-5 col-sm-offset-1">
-                <button class="btn-success btn" value="submit">Add to Database</button>
+                <button class="btn-success btn" id="checking_btn_submit" value="Kirim">Add to Database</button>
                 <button class="btn-inverse btn">Reset</button>
               </div>
             </div>
