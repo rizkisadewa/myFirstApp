@@ -272,50 +272,60 @@ if (show_pointer) {
 }
 
 function checkPointer(){
-  // Multiple Markers from HTML Table id "target-chosen" change into array
 
-  let table = document.getElementById("target-chosen");
-  let rows = table.children;
-  for (let i = 0; i < rows.length; i++) {
-    let fields = rows[i].children;
-    let rowArray = [];
-    for (let j = 1; j < 4; j++) {
-      if (j >= 2 ) {
-        rowArray.push(parseFloat(fields[j].innerHTML));
-      } else {
-        rowArray.push(fields[j].innerHTML)
+  // get value of table target
+  let tbl_target_value = document.getElementById("target-table").rows.length;
+  // check Table
+  if(tbl_target_value > 1){
+
+    // Multiple Markers from HTML Table id "target-chosen" change into array
+
+    let table = document.getElementById("target-chosen");
+    let rows = table.children;
+    for (let i = 0; i < rows.length; i++) {
+      let fields = rows[i].children;
+      let rowArray = [];
+      for (let j = 1; j < 4; j++) {
+        if (j >= 2 ) {
+          rowArray.push(parseFloat(fields[j].innerHTML));
+        } else {
+          rowArray.push(fields[j].innerHTML)
+        }
       }
+      markers.push(rowArray);
+      console.log(markers);
+
     }
-    markers.push(rowArray);
-    console.log(markers);
+    // console.log(markers.length);
 
+
+    // Display multiple markers on a map
+    var infoWindow = new google.maps.InfoWindow(), marker, k;
+    markerTotal = 0;
+    markerTotal = markers.length;
+
+    // Loop through our array of markers & place each one on the map
+    for( k = 0; k < markerTotal; k++ ) {
+        let position = new google.maps.LatLng(markers[k][1], markers[k][2]);
+
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: markers[k][0]
+        });
+
+
+        // Store node's lat and lng
+        nodes.push(position);
+
+    }
+    nodes.push(myLocationPosition);
+    // Update destination count
+    $('#destinations-count').html(nodes.length);
+
+  } else {
+    alert("Mohon pilih objek wisata terlebih dahulu");
   }
-  // console.log(markers.length);
-
-
-  // Display multiple markers on a map
-  var infoWindow = new google.maps.InfoWindow(), marker, k;
-  markerTotal = 0;
-  markerTotal = markers.length;
-
-  // Loop through our array of markers & place each one on the map
-  for( k = 0; k < markerTotal; k++ ) {
-      let position = new google.maps.LatLng(markers[k][1], markers[k][2]);
-
-      marker = new google.maps.Marker({
-          position: position,
-          map: map,
-          title: markers[k][0]
-      });
-
-
-      // Store node's lat and lng
-      nodes.push(position);
-
-  }
-  nodes.push(myLocationPosition);
-  // Update destination count
-  $('#destinations-count').html(nodes.length);
 
 }
 
@@ -407,11 +417,12 @@ $(document).ready(function() {
 
     // Start GA
     $('#show-route').click(function() {
+
         if (nodes.length < 2) {
             if (prevNodes.length >= 2) {
                 nodes = prevNodes;
             } else {
-                alert('Mohon klik lihat lokasi spot terlebih dahulu.');
+                alert('Mohon pilih objek wisata dahulu minimal 2');
                 return;
             }
         }
@@ -431,6 +442,7 @@ $(document).ready(function() {
             ga.getConfig();
             var pop = new ga.population();
             pop.initialize(nodes.length);
+
             var route = pop.getFittest().chromosome;
 
             ga.evolvePopulation(pop, function(update) {
@@ -442,6 +454,7 @@ $(document).ready(function() {
                 var routeCoordinates = [];
                 for (index in route) {
                     routeCoordinates[index] = nodes[route[index]];
+
                 }
                 routeCoordinates[route.length] = nodes[route[0]];
 
@@ -456,6 +469,7 @@ $(document).ready(function() {
                     strokeWeight: 2,
                 });
                 polylinePath.setMap(map);
+
             }, function(result) {
                 // Get route
                 route = result.population.getFittest().chromosome;
@@ -497,9 +511,9 @@ $(document).ready(function() {
 // GA code
 var ga = {
     // Default config
-    "crossoverRate": 0.5,
-    "mutationRate": 0.1,
-    "populationSize": 50,
+    "crossoverRate": 0.5, //probabilitias crossover
+    "mutationRate": 0.1, //probabilitias mutasi
+    "populationSize": 50, //jumlah populasi
     "tournamentSize": 5,
     "elitism": true,
     "maxGenerations": 50,
