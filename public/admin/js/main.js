@@ -439,7 +439,7 @@ $(document).ready(function() {
             $('.ga-info').show();
 
             // Get config and create initial GA population
-            ga.getConfig();
+            ga.getConfig(); // get all paramater from HTML
             var pop = new ga.population();
             pop.initialize(nodes.length);
 
@@ -485,6 +485,8 @@ $(document).ready(function() {
                         stopover: true
                     });
                 }
+                console.log(route); // result of the route
+
 
                 // Add final route to map
                 var request = {
