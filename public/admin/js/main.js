@@ -194,6 +194,14 @@ function initMap() {
 }
 
 // ** SHOW MY AREA
+
+// create a div
+var newDiv =  document.createElement('div');
+newDiv.className= 'col-lg-2';
+
+var newDivRute =  document.createElement('div');
+newDivRute.className= 'col-lg-2';
+
 var show_my_location = document.getElementById('show-my-location');
 if (show_my_location) {
   show_my_location.addEventListener('click', showMyLocation);
@@ -262,15 +270,11 @@ function showMyLocation(){
   });
 
   show_my_location.style.display = "none";
-  // create a div
-  let newDiv =  document.createElement('div');
-  newDiv.className= 'col-lg-2';
 
   // create buttons
-  var newButton = document.createElement('button');
-  newButton.className = 'btn btn-info';
+  let newButton = document.createElement('button');
+  newButton.className = 'btn btn-info show-pointer';
   newButton.id = 'show-pointer';
-  newButton.type = 'button';
   newButton.appendChild(document.createTextNode('Lihat Lokasi Objek'));
 
   // set newButton as a child of newDiv
@@ -283,69 +287,90 @@ function showMyLocation(){
 
 }
 
-
 // Show Marker
-var show_pointer = document.getElementById('show-pointer');
-if (show_pointer) {
-  show_pointer.addEventListener('click', checkPointer);
+var buttonList = document.getElementById('button-set-up');
+if (buttonList) {
+  buttonList.addEventListener('click', checkPointer);
 }
 
 function checkPointer(e){
-  
 
-  // get value of table target
-  let tbl_target_value = document.getElementById("target-table").rows.length;
-  // check Table
-  if(tbl_target_value > 1){
+  if(e.target.classList.contains('show-pointer')){
 
-    // Multiple Markers from HTML Table id "target-chosen" change into array
+    // get value of table target
+    let tbl_target_value = document.getElementById("target-table").rows.length;
+    // check Table
+    if(tbl_target_value > 1){
 
-    let table = document.getElementById("target-chosen");
-    let rows = table.children;
-    for (let i = 0; i < rows.length; i++) {
-      let fields = rows[i].children;
-      let rowArray = [];
-      for (let j = 1; j < 4; j++) {
-        if (j >= 2 ) {
-          rowArray.push(parseFloat(fields[j].innerHTML));
-        } else {
-          rowArray.push(fields[j].innerHTML)
+      // Multiple Markers from HTML Table id "target-chosen" change into array
+
+      let table = document.getElementById("target-chosen");
+      let rows = table.children;
+      for (let i = 0; i < rows.length; i++) {
+        let fields = rows[i].children;
+        let rowArray = [];
+        for (let j = 1; j < 4; j++) {
+          if (j >= 2 ) {
+            rowArray.push(parseFloat(fields[j].innerHTML));
+          } else {
+            rowArray.push(fields[j].innerHTML)
+          }
         }
+        markers.push(rowArray);
+        console.log(markers);
+
       }
-      markers.push(rowArray);
-      console.log(markers);
+      // console.log(markers.length);
 
+
+      // Display multiple markers on a map
+      var infoWindow = new google.maps.InfoWindow(), marker, k;
+      markerTotal = 0;
+      markerTotal = markers.length;
+
+      // Loop through our array of markers & place each one on the map
+      for( k = 0; k < markerTotal; k++ ) {
+          let position = new google.maps.LatLng(markers[k][1], markers[k][2]);
+
+          marker = new google.maps.Marker({
+              position: position,
+              map: map,
+              title: markers[k][0]
+          });
+
+
+          // Store node's lat and lng
+          nodes.push(position);
+
+      }
+      nodes.push(myLocationPosition);
+      // Update destination count
+      $('#destinations-count').html(nodes.length);
+
+    } else {
+      alert("Mohon pilih objek wisata terlebih dahulu");
     }
-    // console.log(markers.length);
+
+    var button = e.target.parentElement;
+    buttonList.removeChild(button);
 
 
-    // Display multiple markers on a map
-    var infoWindow = new google.maps.InfoWindow(), marker, k;
-    markerTotal = 0;
-    markerTotal = markers.length;
+    // create buttons
+    let newButtonRoute = document.createElement('button');
+    newButtonRoute.className = 'btn btn-info show-route';
+    newButtonRoute.id = 'show-route';
+    newButtonRoute.appendChild(document.createTextNode('Lihat Rute Perjalanan'));
 
-    // Loop through our array of markers & place each one on the map
-    for( k = 0; k < markerTotal; k++ ) {
-        let position = new google.maps.LatLng(markers[k][1], markers[k][2]);
+    // set newButton as a child of newDiv
+    newDivRute.appendChild(newButtonRoute);
 
-        marker = new google.maps.Marker({
-            position: position,
-            map: map,
-            title: markers[k][0]
-        });
+    // get an id of div location
+    let button_set_rute = document.getElementById('button-lihat-perjalanan');
+    button_set_rute.appendChild(newDivRute);
+
+	}
 
 
-        // Store node's lat and lng
-        nodes.push(position);
-
-    }
-    nodes.push(myLocationPosition);
-    // Update destination count
-    $('#destinations-count').html(nodes.length);
-
-  } else {
-    alert("Mohon pilih objek wisata terlebih dahulu");
-  }
 
 }
 
@@ -435,6 +460,7 @@ function clearMap() {
 $(document).ready(function() {
     $('#clear-map').click(clearMap);
 
+    
     // Start GA
     $('#show-route').click(function() {
 
