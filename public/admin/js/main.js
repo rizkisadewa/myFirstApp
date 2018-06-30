@@ -261,6 +261,25 @@ function showMyLocation(){
     }
   });
 
+  show_my_location.style.display = "none";
+  // create a div
+  let newDiv =  document.createElement('div');
+  newDiv.className= 'col-lg-2';
+
+  // create buttons
+  var newButton = document.createElement('button');
+  newButton.className = 'btn btn-info';
+  newButton.id = 'show-pointer';
+  newButton.type = 'button';
+  newButton.appendChild(document.createTextNode('Lihat Lokasi Objek'));
+
+  // set newButton as a child of newDiv
+  newDiv.appendChild(newButton);
+
+  // get an id of div location
+  let button_set_up = document.getElementById('button-set-up');
+  button_set_up.appendChild(newDiv);
+
 
 }
 
@@ -271,7 +290,8 @@ if (show_pointer) {
   show_pointer.addEventListener('click', checkPointer);
 }
 
-function checkPointer(){
+function checkPointer(e){
+  
 
   // get value of table target
   let tbl_target_value = document.getElementById("target-table").rows.length;
