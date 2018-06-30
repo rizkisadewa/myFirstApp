@@ -60,14 +60,32 @@ class administrator {
       admin.password = req.body.password;
       admin.accessType = req.body.accessType;
 
-      admin.save(function(err){
-        if(err){
-          console.log(err);
-          return;
-        } else {
-          req.flash('success', 'Admin Added');
-          res.redirect('/admin/data');
-        }
+      let newUser = new Admin({
+        adminNo: admin.adminNo,
+        name: admin.name,
+        username: admin.username,
+        password: admin.password,
+        accessType: admin.accessType
+      });
+
+      //encrypted the Password
+      bcrypt.genSalt(10, (err, salt)=>{
+        bcrypt.hash(newUser.password, salt, (err, hash)=>{
+          if(err){
+            console.log(err);
+          } else {
+            newUser.password = hash;
+            newUser.save((err)=>{
+              if(err){
+                console.log(err);
+                return;
+              } else {
+                req.flash('success', 'Admin Added');
+                res.redirect('/admin/data');
+              }
+            });
+          }
+        });
       });
 
 
@@ -88,11 +106,11 @@ class administrator {
       admin.accessType = req.body.accessType;
 
       let newUser = new Admin({
-        adminNo: administrator.adminNo,
-        name: administrator.name,
-        username: administrator.username,
-        password: administrator.password,
-        accessType: administrator.accessType
+        adminNo: admin.adminNo,
+        name: admin.name,
+        username: admin.username,
+        password: admin.password,
+        accessType: admin.accessType
       });
 
       //encrypted the Password
