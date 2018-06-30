@@ -23,12 +23,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
-        <!-- Button trigger modal -->
-        <!-- Test change in GIT -->
-
         <!-- Large modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" id="getMapData">Pilih Objek Wisata di <%= destination_name %></button>
-        <br>
         <input type="hidden" id="map-destination-data" value="<%= destination_name %>"> <!-- to get the value of destination -->
 
         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -80,25 +75,6 @@
     </div>
   </div>
 
-  <br>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6"></div>
-      <div class="col-lg-2">
-        <button type="button" class="btn btn-info" id="show-my-location">Lihat Lokasi Saya</button>
-      </div>
-      <div class="col-lg-2">
-        <button type="button" class="btn btn-info" id="show-route">Lihat Rute</button>
-      </div>
-      <div class="col-lg-2">
-        <button type="button" class="btn btn-info" id="show-pointer">Lihat Lokasi Spot</button>
-      </div>
-    </div>
-  </div>
-
-  <br>
-
   <div class="container" type="hidden">
     <div class="row">
       <div class="col-lg-12">
@@ -106,7 +82,31 @@
       </div>
     </div>
     <br>
-    
+
+    <div class="row">
+      <div class="col-lg-2">
+        <button type="button" class="btn btn-info" id="show-my-location">Lihat Lokasi Saya</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2">
+        <button type="button" class="btn btn-info hidden" id="show-pointer">Lihat Titik Objek</button>
+      </div>
+      <div class="col-lg-2">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary hidden" data-toggle="modal" data-target=".bd-example-modal-lg" id="getMapData">Pilih Objek Wisata di <%= destination_name %></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2">
+        <button type="button" class="btn btn-info hidden" id="show-route">Lihat Rute</button>
+      </div>
+    </div>
+
+
+
+    <br>
+
     <!-- Table for Spot choosed -->
     <div class="row">
       <div class="col-lg-12">

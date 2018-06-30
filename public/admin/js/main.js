@@ -194,6 +194,7 @@ function initMap() {
 }
 
 // ** SHOW MY AREA
+var pil_obj = document.getElementById('getMapData');
 var show_my_location = document.getElementById('show-my-location');
 if (show_my_location) {
   show_my_location.addEventListener('click', showMyLocation);
@@ -261,6 +262,9 @@ function showMyLocation(){
     }
   });
 
+  show_my_location.style.display = "none";
+  pil_obj.style.display = "block";
+  show_pointer.style.display = "block";
 
 }
 
@@ -322,6 +326,12 @@ function checkPointer(){
     nodes.push(myLocationPosition);
     // Update destination count
     $('#destinations-count').html(nodes.length);
+
+    pil_obj.style.display = "none";
+    show_pointer.style.display = "none";
+
+    var tombRute = document.getElementById('show-route');
+    tombRute.style.display = "block";
 
   } else {
     alert("Mohon pilih objek wisata terlebih dahulu");
