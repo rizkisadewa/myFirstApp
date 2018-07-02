@@ -84,12 +84,15 @@
     <br>
 
   <div class="container">
-    <div class="row" id="button-set-up">
-      <div class="col-lg-6"></div>
+    <div class="row">
       <div class="col-lg-2">
         <button type="button" class="btn btn-info" id="show-my-location">Lihat Lokasi Saya</button>
       </div>
-
+    </div>
+    <div class="row">
+      <div class="col-lg-2">
+        <button type="button" class="btn btn-info hidden" id="show-pointer">Lihat Titik Objek</button>
+      </div>
       <div class="col-lg-2">
         <!-- Button trigger modal and view -->
         <button type="button" class="btn btn-primary hidden" data-toggle="modal" data-target=".bd-example-modal-lg" id="getMapData">Pilih Objek Wisata di <%= destination_name %></button>

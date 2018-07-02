@@ -45,13 +45,10 @@ $(document).ready(function(){
 
       // find out in which table it resides
       var table = $(this).closest("table");
-      console.log(table);
 
       // move it
       row.detach();
-      console.log(table.is("#cart-target"));
-      console.log(table.is("#target-chosen"));
-
+      
       if ($(this).hasClass('btn-danger')) {
         $("#target-chosen").append(row);
       } else {

@@ -194,8 +194,16 @@ function initMap() {
 }
 
 // ** SHOW MY AREA
+
+// ** Deklarasi
+var rute_coor = [];
+var rute_obj = [];
+var rute_obj_name = [];
+var rute_obj_name_result = [];
 var pil_obj = document.getElementById('getMapData');
 var show_my_location = document.getElementById('show-my-location');
+
+
 if (show_my_location) {
   show_my_location.addEventListener('click', showMyLocation);
 }
@@ -263,41 +271,20 @@ function showMyLocation(){
   });
 
   show_my_location.style.display = "none";
-<<<<<<< HEAD
-  // create a div
-  let newDiv =  document.createElement('div');
-  newDiv.className= 'col-lg-2';
-
-  // create buttons
-  var newButton = document.createElement('button');
-  newButton.className = 'btn btn-info';
-  newButton.id = 'show-pointer';
-  newButton.type = 'button';
-  newButton.appendChild(document.createTextNode('Lihat Lokasi Objek'));
-
-  // set newButton as a child of newDiv
-  newDiv.appendChild(newButton);
-
-  // get an id of div location
-  let button_set_up = document.getElementById('button-set-up');
-  button_set_up.appendChild(newDiv);
-
-=======
   pil_obj.style.display = "block";
   show_pointer.style.display = "block";
->>>>>>> hidden_button_with_non_display
 
+  rute_obj_name.push('Lokasi Saya');
 }
 
+// ** SHOW MARKER
 
-// Show Marker
 var show_pointer = document.getElementById('show-pointer');
 if (show_pointer) {
   show_pointer.addEventListener('click', checkPointer);
 }
 
-function checkPointer(e){
-  
+function checkPointer(){
 
   // get value of table target
   let tbl_target_value = document.getElementById("target-table").rows.length;
@@ -343,9 +330,11 @@ function checkPointer(e){
 
         // Store node's lat and lng
         nodes.push(position);
+        rute_obj_name.push(markers[k][0]);
 
     }
     nodes.push(myLocationPosition);
+    console.log("Objek yg Dipilih : "+rute_obj_name);
     // Update destination count
     $('#destinations-count').html(nodes.length);
 
@@ -502,9 +491,29 @@ $(document).ready(function() {
                 });
                 polylinePath.setMap(map);
 
+
             }, function(result) {
                 // Get route
                 route = result.population.getFittest().chromosome;
+
+                console.log(route); // result of the route
+                //
+                // looping for objek name array as per route array
+                for (let i = 0; i < route.length; i++) {
+                  console.log("Objek ke-"+i+" : "+rute_obj_name[route[i]]);
+                  rute_obj_name_result.push(rute_obj_name[route[i]])
+                }
+
+                var indx = rute_obj_name_result.indexOf("Lokasi Saya"); // search index of Lokasi Saya
+                var part_a = rute_obj_name_result.slice(0, indx);
+                var part_b = rute_obj_name_result.slice(indx, rute_obj_name_result.length); // slice from index lokasi saya
+                var rute_concat = part_b.concat(part_a); // concat part a with b
+                // console.log("Hasil Concat : "+rute_concat);
+                // console.log(part_a);
+                // console.log(part_b);
+
+                // console.log(nodes[route[0]]);
+
 
                 // Add route to map
                 directionsService = new google.maps.DirectionsService();
@@ -516,9 +525,13 @@ $(document).ready(function() {
                         location: nodes[route[b]],
                         stopover: true
                     });
-                }
-                console.log(route); // result of the route
 
+                    console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
+
+                    rute_coor.push(nodes[route[b]]);
+                    console.log(rute_coor);
+
+                }
 
                 // Add final route to map
                 var request = {
@@ -535,6 +548,7 @@ $(document).ready(function() {
                     }
                     clearMapMarkersFromButton();
                 });
+
 
             });
         });
