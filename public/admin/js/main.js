@@ -502,18 +502,8 @@ $(document).ready(function() {
                 // looping for objek name array as per route array
                 for (let i = 0; i < route.length; i++) {
                   console.log("Objek ke-"+i+" : "+rute_obj_name[route[i]]);
-                  rute_obj_name_result.push([rute_obj_name[route[i]]]);
+                  rute_coor.push([rute_obj_name[route[i]]]);
                 }
-
-                var indx = rute_obj_name_result.indexOf("Lokasi Saya"); // search index of Lokasi Saya
-                var part_a = rute_obj_name_result.slice(0, indx);
-                var part_b = rute_obj_name_result.slice(indx, rute_obj_name_result.length); // slice from index lokasi saya
-                var rute_concat = part_b.concat(part_a); // concat part a with b
-                // console.log("Hasil Concat : "+rute_concat);
-                // console.log(part_a);
-                // console.log(part_b);
-
-                // console.log(nodes[route[0]]);
 
 
                 // Add route to map
@@ -529,18 +519,22 @@ $(document).ready(function() {
                         stopover: true
                     });
 
+                    var testArray = [];
+                    testArray.push(nodes[route[b]]);
 
                     newMarkers = new google.maps.Marker({
                         position: nodes[route[b]],
                         map: map,
                     });
 
-                    rute_coor.push([newMarkers.getPosition().lat(), newMarkers.getPosition().lng()]);
+                    rute_coor[b].push(newMarkers.getPosition().lat(), newMarkers.getPosition().lng());
 
 
                 }
 
+                console.log(testArray);
                 console.log(rute_coor);
+
 
 
                 // Add final route to map
