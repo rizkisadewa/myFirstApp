@@ -519,8 +519,7 @@ $(document).ready(function() {
                         stopover: true
                     });
 
-                    var testArray = [];
-                    testArray.push(nodes[route[b]]);
+                    console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
 
                     newMarkers = new google.maps.Marker({
                         position: nodes[route[b]],
@@ -532,7 +531,7 @@ $(document).ready(function() {
 
                 }
 
-                console.log(testArray);
+
                 console.log(rute_coor);
 
 
