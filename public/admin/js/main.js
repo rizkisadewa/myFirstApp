@@ -155,6 +155,7 @@ var nodes = [];
 var prevNodes = [];
 var durations = [];
 var markers = [];
+var newMarkers = [];
 var myLocationPosition;
 
 // GOOGLE MAP API
@@ -496,12 +497,12 @@ $(document).ready(function() {
                 // Get route
                 route = result.population.getFittest().chromosome;
 
-                console.log(route); // result of the route
+                // console.log(route); // result of the route
                 //
                 // looping for objek name array as per route array
                 for (let i = 0; i < route.length; i++) {
                   console.log("Objek ke-"+i+" : "+rute_obj_name[route[i]]);
-                  rute_obj_name_result.push(rute_obj_name[route[i]])
+                  rute_obj_name_result.push([rute_obj_name[route[i]]]);
                 }
 
                 var indx = rute_obj_name_result.indexOf("Lokasi Saya"); // search index of Lokasi Saya
@@ -520,18 +521,27 @@ $(document).ready(function() {
                 directionsDisplay = new google.maps.DirectionsRenderer();
                 directionsDisplay.setMap(map);
                 var waypts = [];
+
+
                 for (let b = 0; b < route.length; b++) {
                     waypts.push({
                         location: nodes[route[b]],
                         stopover: true
                     });
 
-                    console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
 
-                    rute_coor.push(nodes[route[b]]);
-                    console.log(rute_coor);
+                    newMarkers = new google.maps.Marker({
+                        position: nodes[route[b]],
+                        map: map,
+                    });
+
+                    rute_coor.push([newMarkers.getPosition().lat(), newMarkers.getPosition().lng()]);
+
 
                 }
+
+                console.log(rute_coor);
+
 
                 // Add final route to map
                 var request = {
