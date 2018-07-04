@@ -500,11 +500,14 @@ $(document).ready(function() {
                 // console.log(route); // result of the route
                 //
                 // looping for objek name array as per route array
+                let counter = 0;
                 for (let i = 0; i < route.length; i++) {
                   console.log("Objek ke-"+i+" : "+rute_obj_name[route[i]]);
-                  rute_coor.push([rute_obj_name[route[i]]]);
+                  rute_obj_name_result.push([rute_obj_name[route[i]]]);
                 }
-
+                rute_obj_name_result.push(rute_obj_name_result[0]);
+                rute_obj_name_result.shift();
+                console.log(rute_obj_name_result);
 
                 // Add route to map
                 directionsService = new google.maps.DirectionsService();
@@ -519,21 +522,28 @@ $(document).ready(function() {
                         stopover: true
                     });
 
-                    var testArray = [];
-                    testArray.push(nodes[route[b]]);
+                    console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
 
                     newMarkers = new google.maps.Marker({
                         position: nodes[route[b]],
                         map: map,
                     });
 
-                    rute_coor[b].push(newMarkers.getPosition().lat(), newMarkers.getPosition().lng());
+                    rute_coor.push([newMarkers.getPosition().lat(), newMarkers.getPosition().lng()]);
 
 
                 }
 
-                console.log(testArray);
+
                 console.log(rute_coor);
+
+                var table_rute_result = [];
+
+                for (let j=0; j < rute_coor.length; j++){
+                  table_rute_result.push(rute_obj_name_result[j].concat(rute_coor[j])) ;
+                }
+
+                console.log(table_rute_result);
 
 
 
