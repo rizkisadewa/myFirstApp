@@ -553,12 +553,26 @@ $(document).ready(function() {
                   }
                 }
 
-                // console.log(rute_coor);
+                console.log(rute_coor);
 
+                // find an index of "Lokasi Saya"
+                var myLocCounter;
+                for(let i=0; i < rute_coor.length; i++){
+                  if (rute_coor[i].indexOf("Lokasi Saya") == 0) {
+                    console.log("Found Lokasi Saya in : "+i);
+                    myLocCounter = i;
+                  }
+                }
+
+                var rute_part_a = rute_coor.slice(myLocCounter, rute_coor.length);
+                var rute_part_b = rute_coor.slice(0, myLocCounter);
 
                 // concat of two arrays rute_coor & table_rute_result
                 var table_rute_result = [];
 
+                table_rute_result = rute_part_a.concat(rute_part_b);
+
+                console.log(table_rute_result);
 
                 // Add final route to map
                 var request = {
