@@ -132,8 +132,8 @@ function getMap(e) {
     var map_lng = response.data.results[0].geometry.location.lng;
 
     // output to app.
-    console.log('lat'+map_lat);
-    console.log('lng'+map_lng);
+    // console.log('lat'+map_lat);
+    // console.log('lng'+map_lng);
     var mapToCenter = {lat: map_lat, lng: map_lng};
     map.setCenter(mapToCenter);
 
@@ -335,7 +335,7 @@ function checkPointer(){
 
     }
     nodes.push(myLocationPosition);
-    console.log("Objek yg Dipilih : "+rute_obj_name);
+    // console.log("Objek yg Dipilih : "+rute_obj_name);
     // Update destination count
     $('#destinations-count').html(nodes.length);
 
@@ -502,7 +502,7 @@ $(document).ready(function() {
                 // looping for objek name array as per route array
                 let counter = 0;
                 for (let i = 0; i < route.length; i++) {
-                  console.log("Objek ke-"+i+" : "+rute_obj_name[route[i]]);
+                  // console.log("Objek ke-"+i+" : "+rute_obj_name[route[i]]);
                   rute_obj_name_result.push([rute_obj_name[route[i]]]);
                 }
                 rute_obj_name_result.push(rute_obj_name_result[0]);
@@ -522,7 +522,7 @@ $(document).ready(function() {
                         stopover: true
                     });
 
-                    console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
+                    // console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
 
                     newMarkers = new google.maps.Marker({
                         position: nodes[route[b]],
@@ -535,16 +535,29 @@ $(document).ready(function() {
                 }
 
 
-                console.log(rute_coor);
-
-                var table_rute_result = [];
-
-                for (let j=0; j < rute_coor.length; j++){
-                  table_rute_result.push(rute_obj_name_result[j].concat(rute_coor[j])) ;
+                // found the location based on longitude
+                for(let j=0; j < rute_coor.length; j++){
+                  for(let k=0; k < markers.length; k++){
+                    if (rute_coor[j][0] == markers[k][1]) {
+                      // console.log('Found the same value');
+                      rute_coor[j].unshift(markers[k][0]);
+                    }
+                  }
                 }
 
-                console.log(table_rute_result);
+                // found my location in array then unshift into an array
+                for(let l=0; l < rute_coor.length; l++){
+                  if (rute_coor[l].length == 2) {
+                    // console.log('Found the start value at : '+l);
+                    rute_coor[l].unshift("Lokasi Saya");
+                  }
+                }
 
+                // console.log(rute_coor);
+
+
+                // concat of two arrays rute_coor & table_rute_result
+                var table_rute_result = [];
 
 
                 // Add final route to map
