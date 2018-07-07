@@ -567,7 +567,7 @@ $(document).ready(function() {
                 var rute_part_a = rute_coor.slice(myLocCounter, rute_coor.length);
                 var rute_part_b = rute_coor.slice(0, myLocCounter);
 
-                // concat of two arrays rute_coor & table_rute_result
+                // concat of two arrays rute_part_a & rute_part_b, so that lokasi saya is the first object
                 var table_rute_result = [];
 
                 table_rute_result = rute_part_a.concat(rute_part_b);
