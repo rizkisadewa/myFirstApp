@@ -157,6 +157,7 @@ var durations = [];
 var markers = [];
 var newMarkers = [];
 var myLocationPosition;
+var table_rute_result = [];
 
 // GOOGLE MAP API
 var map;
@@ -531,7 +532,6 @@ $(document).ready(function() {
 
                     rute_coor.push([newMarkers.getPosition().lat(), newMarkers.getPosition().lng()]);
 
-
                 }
 
 
@@ -559,7 +559,7 @@ $(document).ready(function() {
                 var myLocCounter;
                 for(let i=0; i < rute_coor.length; i++){
                   if (rute_coor[i].indexOf("Lokasi Saya") == 0) {
-                    console.log("Found Lokasi Saya in : "+i);
+                    // console.log("Found Lokasi Saya in : "+i);
                     myLocCounter = i;
                   }
                 }
@@ -568,11 +568,31 @@ $(document).ready(function() {
                 var rute_part_b = rute_coor.slice(0, myLocCounter);
 
                 // concat of two arrays rute_part_a & rute_part_b, so that lokasi saya is the first object
-                var table_rute_result = [];
-
                 table_rute_result = rute_part_a.concat(rute_part_b);
-
                 console.log(table_rute_result);
+
+                // create the table content from arrays
+                var html_table_result = document.getElementById('target-result');
+                for(let row=0 ; row < table_rute_result.length; row++){
+                  // create a rows
+                  let tr = document.createElement('tr');
+
+                  let tbl_counter = 0;
+
+                  // create a columns
+                  let td = document.createElement('td');
+                  td.appendChild(document.createTextNode(row+1));
+                  tr.appendChild(td);
+
+                  for(let col = 0; col < table_rute_result[row].length ; col++){
+                    let td_2 = document.createElement('td');
+                    td_2.appendChild(document.createTextNode(table_rute_result[row][col]));
+                    tr.appendChild(td_2);
+                  }
+
+                  html_table_result.appendChild(tr);
+                }
+
 
                 // Add final route to map
                 var request = {
