@@ -594,9 +594,40 @@ $(document).ready(function() {
                 }
 
                 // Get the distance each markers
+                let counter_distance = 0;
                 var service = new google.maps.DistanceMatrixService;
+
                 for(let i=0 ; i < table_rute_result.length; i++){
-                  calculateDistance(table_rute_result[i][0], table_rute_result[i+1][0]);
+
+                  if ( i < table_rute_result.length - 1) {
+                    let origin = new google.maps.LatLng(table_rute_result[i][1], table_rute_result[i][2]);
+                    let destination = new google.maps.LatLng(table_rute_result[i+1][1], table_rute_result[i+1][2]);
+
+                    calculateDistance(origin, destination);
+
+
+                    // console.log("It is "+result_temp+" km from "+origin+" to "+destination);
+
+                  } else {
+                    let first_node = new google.maps.LatLng(table_rute_result[0][1], table_rute_result[0][2]);
+                    let last_node = new google.maps.LatLng(table_rute_result[table_rute_result.length-1][1], table_rute_result[table_rute_result.length-1][2]);
+
+                    calculateDistance(last_node, first_node);
+
+
+                    // console.log("It is "+result_temp+" km from "+last_node+" to "+first_node);
+
+                  }
+
+                  // if ( i < table_rute_result.length - 1) {
+                  //   console.log("Dari : "+table_rute_result[i][0]+" menuju "+table_rute_result[i+1][0]);
+                  //
+                  // } else {
+                  //
+                  //   console.log("Dari : "+table_rute_result[table_rute_result.length-1][0]+" menuju "+table_rute_result[0][0]);
+                  //
+                  // }
+
                 }
 
 
@@ -643,13 +674,25 @@ function calculateDistance(origin, destination){
       var origin = response.originAddresses[0];
       var destination = response.destinationAddresses[0];
       if (response.rows[0].elements[0].status === "ZERO_RESULTS") {
-        console.log("Better get on a plane. There are no roads between "+origin+" and "+destination);
+        alert("Better get on a plane. There are no roads between "+origin+" and "+destination);
       } else {
         var distance = response.rows[0].elements[0].distance;
-        var distance_value = distance.value;
-        var distance_text = distance.text;
-        var miles = distance_text.substring(0, distance_text.length - 3);
-        console.log("It is " + miles + " miles from " + origin + " to " + destination);
+        var distance_value = distance.value * 0.001;
+
+        // console.log("It is " + distance_value + " miles from " + origin + " to " + destination);
+        var html_table_result = document.getElementById('target-result');
+
+        // let tr = document.createElement('tr');
+
+        // create a columns
+        let td = document.createElement('td');
+        td.appendChild(document.createTextNode(distance_value));
+        // tr.appendChild(td);
+
+        html_table_result.appendChild(td);
+
+        // return response;
+
       }
     }
   }
