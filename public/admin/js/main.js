@@ -608,45 +608,15 @@ $(document).ready(function() {
 
                     calculateDistance(origin, destination);
 
-                    // let tr_dist = document.createElement('tr');
-                    // tr_dist.id = 'distance_result';
-                    // // create a columns
-                    // // let td_dist = document.createElement('td');
-                    // // td_dist.appendChild(document.createTextNode(calculateDistance(origin, destination)));
-                    // // tr_dist.appendChild(td_dist);
-                    //
-                    // html_table_result.appendChild(tr_dist);
-
-
-                    // console.log("It is "+result_temp+" km from "+origin+" to "+destination);
-
                   } else {
                     let first_node = new google.maps.LatLng(table_rute_result[0][1], table_rute_result[0][2]);
                     let last_node = new google.maps.LatLng(table_rute_result[table_rute_result.length-1][1], table_rute_result[table_rute_result.length-1][2]);
 
                     calculateDistance(last_node, first_node);
-                    // let tr_dist = document.createElement('tr');
-                    //
-                    // tr_dist.id = 'distance_result';
-                    // // create a columns
-                    // let td_dist = document.createElement('td');
-                    // td_dist.appendChild(document.createTextNode(calculateDistance(last_node, first_node)));
-                    // tr_dist.appendChild(td_dist);
-                    //
-                    // html_table_result.appendChild(tr_dist);
 
-                    // console.log("It is "+result_temp+" km from "+last_node+" to "+first_node);
 
                   }
 
-                  // if ( i < table_rute_result.length - 1) {
-                  //   console.log("Dari : "+table_rute_result[i][0]+" menuju "+table_rute_result[i+1][0]);
-                  //
-                  // } else {
-                  //
-                  //   console.log("Dari : "+table_rute_result[table_rute_result.length-1][0]+" menuju "+table_rute_result[0][0]);
-                  //
-                  // }
 
                 }
 
@@ -704,23 +674,10 @@ function calculateDistance(origin, destination){
         var distance_value = distance.value * 0.001;
 
         distance_array.push(1);
-        // // console.log("It is " + distance_value + " miles from " + origin + " to " + destination);
-        // var html_table_result = document.getElementById('target-result');
-        //
-        // let tr = document.getElementById('distance');
-        //
-        // // create a columns
-        // let td = document.createElement('td');
-        // td.appendChild(document.createTextNode(distance_value));
-        // tr.appendChild(td);
-        //
-        // html_table_result.appendChild(tr);
 
         let dist_row = document.getElementById("target-result").rows[distance_array.length];
         var x = dist_row.insertCell(dist_row.length);
         x.innerHTML = distance_value;
-
-
 
       }
     }
