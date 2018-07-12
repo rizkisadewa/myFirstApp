@@ -150,6 +150,7 @@ function getMap(e) {
 var directionsDisplay = null;
 var directionsService;
 var polylinePath;
+var distance_array = [];
 
 var nodes = [];
 var prevNodes = [];
@@ -580,22 +581,24 @@ $(document).ready(function() {
                   let tbl_counter = 0;
 
                   // create a columns
+                  // Nomor
                   let td = document.createElement('td');
                   td.appendChild(document.createTextNode(row+1));
                   tr.appendChild(td);
 
-                  for(let col = 0; col < table_rute_result[row].length ; col++){
-                    let td_2 = document.createElement('td');
-                    td_2.appendChild(document.createTextNode(table_rute_result[row][col]));
-                    tr.appendChild(td_2);
-                  }
+                  // Content
+                  let td_2 = document.createElement('td');
+                  td_2.appendChild(document.createTextNode(table_rute_result[row][0]));
+                  tr.appendChild(td_2);
+
+
 
                   html_table_result.appendChild(tr);
                 }
 
+
+
                 // Get the distance each markers
-                let counter_distance = 0;
-                var service = new google.maps.DistanceMatrixService;
 
                 for(let i=0 ; i < table_rute_result.length; i++){
 
@@ -605,6 +608,15 @@ $(document).ready(function() {
 
                     calculateDistance(origin, destination);
 
+                    // let tr_dist = document.createElement('tr');
+                    // tr_dist.id = 'distance_result';
+                    // // create a columns
+                    // // let td_dist = document.createElement('td');
+                    // // td_dist.appendChild(document.createTextNode(calculateDistance(origin, destination)));
+                    // // tr_dist.appendChild(td_dist);
+                    //
+                    // html_table_result.appendChild(tr_dist);
+
 
                     // console.log("It is "+result_temp+" km from "+origin+" to "+destination);
 
@@ -613,7 +625,15 @@ $(document).ready(function() {
                     let last_node = new google.maps.LatLng(table_rute_result[table_rute_result.length-1][1], table_rute_result[table_rute_result.length-1][2]);
 
                     calculateDistance(last_node, first_node);
-
+                    // let tr_dist = document.createElement('tr');
+                    //
+                    // tr_dist.id = 'distance_result';
+                    // // create a columns
+                    // let td_dist = document.createElement('td');
+                    // td_dist.appendChild(document.createTextNode(calculateDistance(last_node, first_node)));
+                    // tr_dist.appendChild(td_dist);
+                    //
+                    // html_table_result.appendChild(tr_dist);
 
                     // console.log("It is "+result_temp+" km from "+last_node+" to "+first_node);
 
@@ -629,6 +649,7 @@ $(document).ready(function() {
                   // }
 
                 }
+
 
 
                 // Add final route to map
@@ -654,9 +675,11 @@ $(document).ready(function() {
 
 });
 
+
 // Get Distance for table_rute_result
 function calculateDistance(origin, destination){
   var service = new google.maps.DistanceMatrixService();
+
   service.getDistanceMatrix(
   {
     origins: [origin],
@@ -670,6 +693,7 @@ function calculateDistance(origin, destination){
   function callback(response, status) {
     if (status != google.maps.DistanceMatrixStatus.OK) {
       console.log(err);
+
     } else {
       var origin = response.originAddresses[0];
       var destination = response.destinationAddresses[0];
@@ -679,22 +703,28 @@ function calculateDistance(origin, destination){
         var distance = response.rows[0].elements[0].distance;
         var distance_value = distance.value * 0.001;
 
-        // console.log("It is " + distance_value + " miles from " + origin + " to " + destination);
-        var html_table_result = document.getElementById('target-result');
-
-        // let tr = document.createElement('tr');
-
-        // create a columns
-        let td = document.createElement('td');
-        td.appendChild(document.createTextNode(distance_value));
+        distance_array.push(1);
+        // // console.log("It is " + distance_value + " miles from " + origin + " to " + destination);
+        // var html_table_result = document.getElementById('target-result');
+        //
+        // let tr = document.getElementById('distance');
+        //
+        // // create a columns
+        // let td = document.createElement('td');
+        // td.appendChild(document.createTextNode(distance_value));
         // tr.appendChild(td);
+        //
+        // html_table_result.appendChild(tr);
 
-        html_table_result.appendChild(td);
+        let dist_row = document.getElementById("target-result").rows[distance_array.length];
+        var x = dist_row.insertCell(dist_row.length);
+        x.innerHTML = distance_value;
 
-        // return response;
+
 
       }
     }
+
   }
 
 
