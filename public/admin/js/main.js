@@ -151,6 +151,7 @@ var directionsDisplay = null;
 var directionsService;
 var polylinePath;
 var distance_array = [];
+var dest_column = [];
 
 var nodes = [];
 var prevNodes = [];
@@ -591,11 +592,21 @@ $(document).ready(function() {
                   td_2.appendChild(document.createTextNode(table_rute_result[row][0]));
                   tr.appendChild(td_2);
 
-
-
                   html_table_result.appendChild(tr);
                 }
 
+                // Destination Column
+
+                var dest_part_a = table_rute_result.slice(1, rute_coor.length);
+                var dest_part_b = table_rute_result.slice(0, 1);
+
+                dest_column = dest_part_a.concat(dest_part_b);
+
+                for(let row=0 ; row < table_rute_result.length; row++){
+                  let dest_row = document.getElementById("target-result").rows[row+1];
+                  let x = dest_row.insertCell(dest_row.length);
+                  x.innerHTML = dest_column[row][0];
+                }
 
 
                 // Get the distance each markers
@@ -665,18 +676,18 @@ function calculateDistance(origin, destination){
       console.log(err);
 
     } else {
-      var origin = response.originAddresses[0];
-      var destination = response.destinationAddresses[0];
+      let origin = response.originAddresses[0];
+      let destination = response.destinationAddresses[0];
       if (response.rows[0].elements[0].status === "ZERO_RESULTS") {
         alert("Better get on a plane. There are no roads between "+origin+" and "+destination);
       } else {
-        var distance = response.rows[0].elements[0].distance;
-        var distance_value = distance.value * 0.001;
+        let distance = response.rows[0].elements[0].distance;
+        let distance_value = distance.value * 0.001;
 
         distance_array.push(1);
 
         let dist_row = document.getElementById("target-result").rows[distance_array.length];
-        var x = dist_row.insertCell(dist_row.length);
+        let x = dist_row.insertCell(dist_row.length);
         x.innerHTML = distance_value;
 
       }
