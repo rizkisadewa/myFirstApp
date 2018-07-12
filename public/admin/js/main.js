@@ -132,8 +132,8 @@ function getMap(e) {
     var map_lng = response.data.results[0].geometry.location.lng;
 
     // output to app.
-    console.log('lat'+map_lat);
-    console.log('lng'+map_lng);
+    // console.log('lat'+map_lat);
+    // console.log('lng'+map_lng);
     var mapToCenter = {lat: map_lat, lng: map_lng};
     map.setCenter(mapToCenter);
 
@@ -150,6 +150,8 @@ function getMap(e) {
 var directionsDisplay = null;
 var directionsService;
 var polylinePath;
+var distance_array = [];
+var dest_column = [];
 
 var nodes = [];
 var prevNodes = [];
@@ -157,6 +159,7 @@ var durations = [];
 var markers = [];
 var newMarkers = [];
 var myLocationPosition;
+var table_rute_result = [];
 
 // GOOGLE MAP API
 var map;
@@ -335,7 +338,7 @@ function checkPointer(){
 
     }
     nodes.push(myLocationPosition);
-    console.log("Objek yg Dipilih : "+rute_obj_name);
+    // console.log("Objek yg Dipilih : "+rute_obj_name);
     // Update destination count
     $('#destinations-count').html(nodes.length);
 
@@ -500,11 +503,14 @@ $(document).ready(function() {
                 // console.log(route); // result of the route
                 //
                 // looping for objek name array as per route array
+                let counter = 0;
                 for (let i = 0; i < route.length; i++) {
-                  console.log("Objek ke-"+i+" : "+rute_obj_name[route[i]]);
-                  rute_coor.push([rute_obj_name[route[i]]]);
+                  // console.log("Objek ke-"+i+" : "+rute_obj_name[route[i]]);
+                  rute_obj_name_result.push([rute_obj_name[route[i]]]);
                 }
-
+                rute_obj_name_result.push(rute_obj_name_result[0]);
+                rute_obj_name_result.shift();
+                console.log(rute_obj_name_result);
 
                 // Add route to map
                 directionsService = new google.maps.DirectionsService();
@@ -519,20 +525,119 @@ $(document).ready(function() {
                         stopover: true
                     });
 
+<<<<<<< HEAD
                     console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
+=======
+                    // console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
+>>>>>>> result_route_table
 
                     newMarkers = new google.maps.Marker({
                         position: nodes[route[b]],
                         map: map,
                     });
 
-                    rute_coor[b].push(newMarkers.getPosition().lat(), newMarkers.getPosition().lng());
-
+                    rute_coor.push([newMarkers.getPosition().lat(), newMarkers.getPosition().lng()]);
 
                 }
 
 
+                // found the location based on longitude
+                for(let j=0; j < rute_coor.length; j++){
+                  for(let k=0; k < markers.length; k++){
+                    if (rute_coor[j][0] == markers[k][1]) {
+                      // console.log('Found the same value');
+                      rute_coor[j].unshift(markers[k][0]);
+                    }
+                  }
+                }
+
+                // found my location in array then unshift into an array
+                for(let l=0; l < rute_coor.length; l++){
+                  if (rute_coor[l].length == 2) {
+                    // console.log('Found the start value at : '+l);
+                    rute_coor[l].unshift("Lokasi Saya");
+                  }
+                }
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> result_route_table
                 console.log(rute_coor);
+
+                // find an index of "Lokasi Saya"
+                var myLocCounter;
+                for(let i=0; i < rute_coor.length; i++){
+                  if (rute_coor[i].indexOf("Lokasi Saya") == 0) {
+                    // console.log("Found Lokasi Saya in : "+i);
+                    myLocCounter = i;
+                  }
+                }
+
+                var rute_part_a = rute_coor.slice(myLocCounter, rute_coor.length);
+                var rute_part_b = rute_coor.slice(0, myLocCounter);
+
+                // concat of two arrays rute_part_a & rute_part_b, so that lokasi saya is the first object
+                table_rute_result = rute_part_a.concat(rute_part_b);
+                console.log(table_rute_result);
+
+                // create the table content from arrays
+                var html_table_result = document.getElementById('target-result');
+                for(let row=0 ; row < table_rute_result.length; row++){
+                  // create a rows
+                  let tr = document.createElement('tr');
+
+                  let tbl_counter = 0;
+
+                  // create a columns
+                  // Nomor
+                  let td = document.createElement('td');
+                  td.appendChild(document.createTextNode(row+1));
+                  tr.appendChild(td);
+
+                  // Content
+                  let td_2 = document.createElement('td');
+                  td_2.appendChild(document.createTextNode(table_rute_result[row][0]));
+                  tr.appendChild(td_2);
+
+                  html_table_result.appendChild(tr);
+                }
+
+                // Destination Column
+
+                var dest_part_a = table_rute_result.slice(1, rute_coor.length);
+                var dest_part_b = table_rute_result.slice(0, 1);
+
+                dest_column = dest_part_a.concat(dest_part_b);
+
+                for(let row=0 ; row < table_rute_result.length; row++){
+                  let dest_row = document.getElementById("target-result").rows[row+1];
+                  let x = dest_row.insertCell(dest_row.length);
+                  x.innerHTML = dest_column[row][0];
+                }
+
+
+                // Get the distance each markers
+
+                for(let i=0 ; i < table_rute_result.length; i++){
+
+                  if ( i < table_rute_result.length - 1) {
+                    let origin = new google.maps.LatLng(table_rute_result[i][1], table_rute_result[i][2]);
+                    let destination = new google.maps.LatLng(table_rute_result[i+1][1], table_rute_result[i+1][2]);
+
+                    calculateDistance(origin, destination);
+
+                  } else {
+                    let first_node = new google.maps.LatLng(table_rute_result[0][1], table_rute_result[0][2]);
+                    let last_node = new google.maps.LatLng(table_rute_result[table_rute_result.length-1][1], table_rute_result[table_rute_result.length-1][2]);
+
+                    calculateDistance(last_node, first_node);
+
+
+                  }
+
+
+                }
 
 
 
@@ -558,6 +663,48 @@ $(document).ready(function() {
     });
 
 });
+
+
+// Get Distance for table_rute_result
+function calculateDistance(origin, destination){
+  var service = new google.maps.DistanceMatrixService();
+
+  service.getDistanceMatrix(
+  {
+    origins: [origin],
+    destinations: [destination],
+    travelMode: google.maps.TravelMode.DRIVING,
+    unitSystem: google.maps.UnitSystem.IMPERIAL,
+    avoidHighways: false,
+    avoidTolls: false
+  }, callback);
+
+  function callback(response, status) {
+    if (status != google.maps.DistanceMatrixStatus.OK) {
+      console.log(err);
+
+    } else {
+      let origin = response.originAddresses[0];
+      let destination = response.destinationAddresses[0];
+      if (response.rows[0].elements[0].status === "ZERO_RESULTS") {
+        alert("Better get on a plane. There are no roads between "+origin+" and "+destination);
+      } else {
+        let distance = response.rows[0].elements[0].distance;
+        let distance_value = distance.value * 0.001;
+
+        distance_array.push(1);
+
+        let dist_row = document.getElementById("target-result").rows[distance_array.length];
+        let x = dist_row.insertCell(dist_row.length);
+        x.innerHTML = distance_value;
+
+      }
+    }
+
+  }
+
+
+}
 
 // GA code
 var ga = {
