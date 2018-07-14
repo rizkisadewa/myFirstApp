@@ -525,11 +525,11 @@ $(document).ready(function() {
                         stopover: true
                     });
 
-<<<<<<< HEAD
-                    console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
-=======
-                    // console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
->>>>>>> result_route_table
+// <<<<<<< HEAD
+//                     console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
+// =======
+//                     // console.log("Nodes ke-"+b+" : "+nodes[route[b]]);
+// >>>>>>>             result_route_table
 
                     newMarkers = new google.maps.Marker({
                         position: nodes[route[b]],
@@ -559,10 +559,10 @@ $(document).ready(function() {
                   }
                 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> result_route_table
+// <<<<<<< HEAD
+//
+// =======
+// >>>>>>> result_route_table
                 console.log(rute_coor);
 
                 // find an index of "Lokasi Saya"
@@ -690,7 +690,8 @@ function calculateDistance(origin, destination){
         alert("Better get on a plane. There are no roads between "+origin+" and "+destination);
       } else {
         let distance = response.rows[0].elements[0].distance;
-        let distance_value = distance.value * 0.001;
+        let distance_value_raw = distance.value * 0.001;
+        let distance_value = distance_value_raw.toFixed(2);
 
         distance_array.push(1);
 
