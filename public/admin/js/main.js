@@ -500,8 +500,6 @@ $(document).ready(function() {
                 // Get route
                 route = result.population.getFittest().chromosome;
 
-                // console.log(route); // result of the route
-                //
                 // looping for objek name array as per route array
                 let counter = 0;
                 for (let i = 0; i < route.length; i++) {
@@ -510,7 +508,7 @@ $(document).ready(function() {
                 }
                 rute_obj_name_result.push(rute_obj_name_result[0]);
                 rute_obj_name_result.shift();
-                console.log(rute_obj_name_result);
+                // console.log(rute_obj_name_result);
 
                 // Add route to map
                 directionsService = new google.maps.DirectionsService();
@@ -563,7 +561,7 @@ $(document).ready(function() {
 //
 // =======
 // >>>>>>> result_route_table
-                console.log(rute_coor);
+                // console.log(rute_coor);
 
                 // find an index of "Lokasi Saya"
                 var myLocCounter;
@@ -579,7 +577,7 @@ $(document).ready(function() {
 
                 // concat of two arrays rute_part_a & rute_part_b, so that lokasi saya is the first object
                 table_rute_result = rute_part_a.concat(rute_part_b);
-                console.log(table_rute_result);
+                // console.log(table_rute_result); // result in array
 
                 // create the table content from arrays
                 var html_table_result = document.getElementById('target-result');
@@ -773,6 +771,11 @@ var ga = {
                 var newIndividual = new ga.individual(chromosomeLength);
                 newIndividual.initialize();
                 this.individuals.push(newIndividual);
+                // console.log("New Individual "+i+": "+JSON.stringify(newIndividual, null, 4));
+                // show in console
+                if (i < 5) {
+                  console.log("New Individual Nomor ke "+i+" : "+newIndividual.chromosome);
+                }
             }
         };
 
@@ -784,8 +787,12 @@ var ga = {
                 // Don't mutate if this is the elite individual and elitism is enabled
                 if (ga.elitism != true || index != fittestIndex) {
                     this.individuals[index].mutate();
+
                 }
+
             }
+            console.log("Mutation Result : "+fittestIndex);
+
         };
 
         // Applies crossover to current population and returns population of offspring
@@ -896,6 +903,7 @@ var ga = {
                     var tempNode = this.chromosome[randomIndex];
                     this.chromosome[randomIndex] = this.chromosome[index];
                     this.chromosome[index] = tempNode;
+
                 }
             }
         };
