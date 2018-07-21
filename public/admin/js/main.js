@@ -459,7 +459,7 @@ $(document).ready(function() {
 
 
 
-        // Get route durations
+        // Get route
         getDurations(function(){
             $('.ga-info').show();
 
@@ -614,31 +614,6 @@ $(document).ready(function() {
                   x.innerHTML = dest_column[row][0];
                 }
 
-
-                // Get the distance each markers
-
-                for(let i=0 ; i < table_rute_result.length; i++){
-
-                  if ( i < table_rute_result.length - 1) {
-                    let origin = new google.maps.LatLng(table_rute_result[i][1], table_rute_result[i][2]);
-                    let destination = new google.maps.LatLng(table_rute_result[i+1][1], table_rute_result[i+1][2]);
-
-                    calculateDistance(origin, destination);
-
-                  } else {
-                    let first_node = new google.maps.LatLng(table_rute_result[0][1], table_rute_result[0][2]);
-                    let last_node = new google.maps.LatLng(table_rute_result[table_rute_result.length-1][1], table_rute_result[table_rute_result.length-1][2]);
-
-                    calculateDistance(last_node, first_node);
-
-
-                  }
-
-
-                }
-
-
-
                 // Add final route to map
                 var request = {
                     origin: nodes[route[0]],
@@ -654,6 +629,27 @@ $(document).ready(function() {
                     }
                     clearMapMarkersFromButton();
                 });
+
+                // Get the distance each markers
+
+                for(let d=0 ; d < table_rute_result.length; d++){
+
+                  if ( d == table_rute_result.length - 1) {
+                    let first_node = new google.maps.LatLng(table_rute_result[0][1], table_rute_result[0][2]);
+                    let last_node = new google.maps.LatLng(table_rute_result[table_rute_result.length-1][1], table_rute_result[table_rute_result.length-1][2]);
+
+                    calculateDistance(last_node, first_node);
+                    console.log("last_node, first_node");
+                  } else {
+                    let origin = new google.maps.LatLng(table_rute_result[d][1], table_rute_result[d][2]);
+                    let destination = new google.maps.LatLng(table_rute_result[d+1][1], table_rute_result[d+1][2]);
+
+                    calculateDistance(origin, destination);
+                    console.log("origin, destination");
+                  }
+
+
+                }
 
 
             });
