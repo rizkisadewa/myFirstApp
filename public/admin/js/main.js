@@ -107,44 +107,44 @@ function geocodeArea(e) {
 
 // ** OPEN MAP SELECTION
 var getMapData = document.getElementById('getMapData');
-if (getMapData) {
-  getMapData.addEventListener('click', getMap);
-}
-
-function getMap(e) {
-  e.preventDefault();
-
-  var map_center = document.getElementById('map-destination-data').value;
-  // alert(map_center)// debug for get data
-
-  axios.get(gogApiUrl, {
-        params: {
-          address: map_center,
-          key: mapKey
-        }
-  })
-  .then(function(response){
-    // log full response API
-    console.log(response);
-
-    // Geometry
-    var map_lat = response.data.results[0].geometry.location.lat;
-    var map_lng = response.data.results[0].geometry.location.lng;
-
-    // output to app.
-    // console.log('lat'+map_lat);
-    // console.log('lng'+map_lng);
-    var mapToCenter = {lat: map_lat, lng: map_lng};
-    map.setCenter(mapToCenter);
-
-
-  })
-  .catch(function(error){
-    console.log(error);
-  });
-
-
-}
+// if (getMapData) {
+//   getMapData.addEventListener('click', getMap);
+// }
+//
+// function getMap(e) {
+//   e.preventDefault();
+//
+//   var map_center = document.getElementById('map-destination-data').value;
+//   // alert(map_center)// debug for get data
+//
+//   axios.get(gogApiUrl, {
+//         params: {
+//           address: map_center,
+//           key: mapKey
+//         }
+//   })
+//   .then(function(response){
+//     // log full response API
+//     console.log(response);
+//
+//     // Geometry
+//     var map_lat = response.data.results[0].geometry.location.lat;
+//     var map_lng = response.data.results[0].geometry.location.lng;
+//
+//     // output to app.
+//     // console.log('lat'+map_lat);
+//     // console.log('lng'+map_lng);
+//     var mapToCenter = {lat: map_lat, lng: map_lng};
+//     map.setCenter(mapToCenter);
+//
+//
+//   })
+//   .catch(function(error){
+//     console.log(error);
+//   });
+//
+//
+// }
 
 // DECLARATION FOR GA Algorithm
 var directionsDisplay = null;
