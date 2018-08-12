@@ -663,21 +663,24 @@ $(document).ready(function() {
 });
 
 function createTableComparison(population){
-  // table_rute_result
-  // comparison_population
-  // comp_ind_index
-  let comp_individual = [];
 
   // iterate the index of population
   for(let i=0; i < population.length; i++){
     //console.log("Individu ke "+i+" = "+population[i]);
 
     // itirate the index of individual
-    // for(let j=0; j < table_rute_result.length; j++){
-    //     comp_individual.push(table_rute_result[comp_ind_index[i][j]]);
-    // }
+    for(let j=0; j < population[i].length; j++){
+
+        // Assignment of the index to the value of result of route
+        // console.log("Individu ke-"+i+" = "+table_rute_result[population[i][j]]);
+        // console.log("Individu ke-"+i+" = "+population[i][j]);
+        population[i][j] = table_rute_result[population[i][j]];
+        // console.log("After Assigned Individu ke-"+i+" = "+population[i][j]);
+
+    }
 
   };
+  console.log(population);
 
 
 
