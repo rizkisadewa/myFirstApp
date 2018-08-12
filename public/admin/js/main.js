@@ -160,6 +160,8 @@ var markers = [];
 var newMarkers = [];
 var myLocationPosition;
 var table_rute_result = [];
+var comparison_population = [];
+var comp_ind_index = []; // comparison individual index
 
 // GOOGLE MAP API
 var map;
@@ -639,17 +641,19 @@ $(document).ready(function() {
                     let last_node = new google.maps.LatLng(table_rute_result[table_rute_result.length-1][1], table_rute_result[table_rute_result.length-1][2]);
 
                     calculateDistance(last_node, first_node);
-                    console.log("last_node, first_node");
+                    // console.log("last_node, first_node");
                   } else {
                     let origin = new google.maps.LatLng(table_rute_result[d][1], table_rute_result[d][2]);
                     let destination = new google.maps.LatLng(table_rute_result[d+1][1], table_rute_result[d+1][2]);
 
                     calculateDistance(origin, destination);
-                    console.log("origin, destination");
+                    // console.log("origin, destination");
                   }
 
 
                 }
+
+                createTableComparison(comp_ind_index);
 
 
             });
@@ -657,6 +661,27 @@ $(document).ready(function() {
     });
 
 });
+
+function createTableComparison(population){
+  // table_rute_result
+  // comparison_population
+  // comp_ind_index
+  let comp_individual = [];
+
+  // iterate the index of population
+  for(let i=0; i < population.length; i++){
+    //console.log("Individu ke "+i+" = "+population[i]);
+
+    // itirate the index of individual
+    // for(let j=0; j < table_rute_result.length; j++){
+    //     comp_individual.push(table_rute_result[comp_ind_index[i][j]]);
+    // }
+
+  };
+
+
+
+}
 
 
 // Get Distance for table_rute_result
@@ -772,6 +797,7 @@ var ga = {
                 if (i < 5) {
                   console.log("New Individual Nomor ke "+i+" : "+newIndividual.chromosome);
                 }
+                comp_ind_index.push(newIndividual.chromosome);
             }
         };
 
