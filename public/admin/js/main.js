@@ -655,7 +655,6 @@ $(document).ready(function() {
 
                 createTableComparison(comp_ind_index);
 
-
             });
         });
     });
@@ -668,6 +667,37 @@ function createTableComparison(population){
   for(let i=0; i < population.length; i++){
     //console.log("Individu ke "+i+" = "+population[i]);
 
+    // CREATE TABLES
+    var tableDivRow = document.createElement("div");
+    tableDivRow.setAttribute("class", "row")
+    var tableDiv = document.createElement("div");
+    tableDiv.setAttribute("class", "col-lg-12");
+
+    var tableId = document.getElementById("table_comparison");
+    var x = document.createElement("TABLE");
+    x.setAttribute("id", "myTableComparison-"+i);
+    x.setAttribute("class", "table");
+    document.body.appendChild(x);
+
+
+    // CREATE TABLE HEADER
+    var tableHead = document.getElementById("myTableComparison-"+i);
+    var header = tableHead.createTHead();
+    header.setAttribute("class", "bg-warning");
+    var row = header.insertRow(0);
+    var cell = row.insertCell(0);
+    cell.innerHTML = "No.";
+    var cell = row.insertCell(1);
+    cell.innerHTML = "Rekomendasi Perbandingan";
+    var cell = row.insertCell(2);
+    cell.innerHTML = "Menuju";
+    var cell = row.insertCell(3);
+    cell.innerHTML = "Jarak";
+
+    tableId.appendChild(tableDivRow);
+    tableDivRow.appendChild(tableDiv);
+    tableDiv.appendChild(x);
+
     // itirate the index of individual
     for(let j=0; j < population[i].length; j++){
 
@@ -677,11 +707,38 @@ function createTableComparison(population){
         population[i][j] = table_rute_result[population[i][j]];
         // console.log("After Assigned Individu ke-"+i+" = "+population[i][j]);
 
+
+        for(let row=0; row<population[i][j].length; row++){
+
+          // CREATE TABEL ROW
+          let y = document.createElement("TR");
+          y.setAttribute("id", "myTr"+i);
+          tableId.appendChild(y);
+
+          // number
+          let td = document.createElement('td');
+          td.appendChild(document.createTextNode(row+1));
+          y.appendChild(td);
+
+          // content
+
+          // CREATE TABLE CELL
+          let z = document.createElement("td");
+          let t = document.createTextNode(population[i][j][0]);
+          z.appendChild(t);
+          y.appendChild(z);
+
+          tableId.appendChild(y);
+
+        }
+
+
     }
 
-  };
-  console.log(population);
 
+
+  };
+  // console.log(population);
 
 
 }
