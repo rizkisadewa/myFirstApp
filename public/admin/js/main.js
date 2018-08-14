@@ -739,12 +739,25 @@ function createTableComparison(population){
 
       // CREATE CONTENT OF TABLE
       var row = tBody.insertRow(0);
+
+      // number column
       var cell = row.insertCell(0);
       cell.innerHTML = j+1;
+
+      // perbanding column
       var cell = row.insertCell(1);
       cell.innerHTML = population[i][j][0];
-      var cell = row.insertCell(2);
-      cell.innerHTML = "TBA";
+
+      // tujuan column
+      if(j < population[i].length - 1){
+        var cell = row.insertCell(2);
+        cell.innerHTML = population[i][j+1][0];
+      } else {
+        var cell = row.insertCell(2);
+        cell.innerHTML = population[i][0][0];
+      }
+
+      // jarak column
       var cell = row.insertCell(3);
       cell.innerHTML = "TBA";
 
