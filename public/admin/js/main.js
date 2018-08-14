@@ -663,6 +663,7 @@ $(document).ready(function() {
 
 function createTableComparison(population){
 
+  var counterNo = 1;
   // iterate the index of population
   for(let i=0; i < population.length; i++){
     //console.log("Individu ke "+i+" = "+population[i]);
@@ -688,7 +689,7 @@ function createTableComparison(population){
     var cell = row.insertCell(0);
     cell.innerHTML = "No.";
     var cell = row.insertCell(1);
-    cell.innerHTML = "Rekomendasi Perbandingan";
+    cell.innerHTML = "Rekomendasi Perbandingan ke-"+counterNo;
     var cell = row.insertCell(2);
     cell.innerHTML = "Menuju";
     var cell = row.insertCell(3);
@@ -697,6 +698,8 @@ function createTableComparison(population){
     tableId.appendChild(tableDivRow);
     tableDivRow.appendChild(tableDiv);
     tableDiv.appendChild(x);
+
+    counterNo = counterNo + 1;
 
     // itirate the index of individual
 
@@ -718,7 +721,7 @@ function createTableComparison(population){
       var myLocCounter;
       for(let k=0; k < population[i].length; k++){
         if (population[i][k][0] === "Lokasi Saya") {
-          console.log("Found Lokasi Saya in : "+k);
+          // console.log("Found Lokasi Saya in : "+k);
           myLocCounter = k;
         }
       }
@@ -730,26 +733,44 @@ function createTableComparison(population){
       population[i] = rute_part_a.concat(rute_part_b);
       // console.log(table_rute_result); // result in array
 
+      // CREATE TBODY
+      let tBody = tableHead.createTBody();
 
-      // CREATE TABEL ROW
-      let y = document.createElement("TR");
-      y.setAttribute("id", "myTr"+i);
-      tableId.appendChild(y);
 
-      // number
-      let td = document.createElement('td');
-      td.appendChild(document.createTextNode(i+1));
-      y.appendChild(td);
+      // CREATE CONTENT OF TABLE
+      var row = tBody.insertRow(0);
+      var cell = row.insertCell(0);
+      cell.innerHTML = j+1;
+      var cell = row.insertCell(1);
+      cell.innerHTML = population[i][j][0];
+      var cell = row.insertCell(2);
+      cell.innerHTML = "TBA";
+      var cell = row.insertCell(3);
+      cell.innerHTML = "TBA";
 
-      // content
+      tableId.appendChild(tableDivRow);
+      tableDivRow.appendChild(tableDiv);
+      tableDiv.appendChild(x);
 
-      // CREATE TABLE CELL
-      let z = document.createElement("td");
-      let t = document.createTextNode(population[i][j][0]);
-      z.appendChild(t);
-      y.appendChild(z);
-
-      tableId.appendChild(y);
+      // // CREATE TABEL ROW
+      // let y = document.createElement("TR");
+      // y.setAttribute("id", "myTr"+i);
+      // tableId.appendChild(y);
+      //
+      // // number
+      // let td = document.createElement('td');
+      // td.appendChild(document.createTextNode(i+1));
+      // y.appendChild(td);
+      //
+      // // content
+      //
+      // // CREATE TABLE CELL
+      // let z = document.createElement("td");
+      // let t = document.createTextNode(population[i][j][0]);
+      // z.appendChild(t);
+      // y.appendChild(z);
+      //
+      // tableId.appendChild(y);
 
     }
 
