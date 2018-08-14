@@ -162,6 +162,7 @@ var myLocationPosition;
 var table_rute_result = [];
 var comparison_population = [];
 var comp_ind_index = []; // comparison individual index
+var distance_value_comp; // ditance value for table comparison
 
 // GOOGLE MAP API
 var map;
@@ -759,7 +760,25 @@ function createTableComparison(population){
 
       // jarak column
       var cell = row.insertCell(3);
-      cell.innerHTML = "TBA";
+      // cell.innerHTML = "TBA";
+
+      if ( j == population[i].length - 1) {
+        let first_node = new google.maps.LatLng(population[i][0][1], population[i][0][2]);
+        let last_node = new google.maps.LatLng(population[i][population[i].length-1][1], population[i][population[i].length-1][2]);
+
+        // console.log(calculateDistanceTC(last_node, first_node));
+        // cell.innerHTML = distance_value_comp;
+        console.log(first_node+" & "+last_node);
+      } else {
+        let origin = new google.maps.LatLng(population[i][j][1], population[i][j][2]);
+        let destination = new google.maps.LatLng(population[i][j][1], population[i][j][2]);
+
+        // console.log(calculateDistanceTC(origin, destination));
+        // cell.innerHTML = distance_value_comp;
+        console.log(origin+" & "+destination);
+      }
+
+
 
       tableId.appendChild(tableDivRow);
       tableDivRow.appendChild(tableDiv);
@@ -831,6 +850,44 @@ function calculateDistance(origin, destination){
         let dist_row = document.getElementById("target-result").rows[distance_array.length];
         let x = dist_row.insertCell(dist_row.length);
         x.innerHTML = distance_value;
+
+      }
+    }
+
+  }
+
+
+}
+
+// Get Distance for table_comparison
+function calculateDistanceTC(origin, destination){
+  var service = new google.maps.DistanceMatrixService();
+
+  service.getDistanceMatrix(
+  {
+    origins: [origin],
+    destinations: [destination],
+    travelMode: google.maps.TravelMode.DRIVING,
+    unitSystem: google.maps.UnitSystem.IMPERIAL,
+    avoidHighways: false,
+    avoidTolls: false
+  }, callback);
+
+  function callback(response, status) {
+    if (status != google.maps.DistanceMatrixStatus.OK) {
+      console.log(err);
+
+    } else {
+      let origin = response.originAddresses[0];
+      let destination = response.destinationAddresses[0];
+      if (response.rows[0].elements[0].status === "ZERO_RESULTS") {
+        alert("Better get on a plane. There are no roads between "+origin+" and "+destination);
+      } else {
+        let distance = response.rows[0].elements[0].distance;
+        let distance_value_raw = distance.value * 0.001;
+        let distance_value = distance_value_raw.toFixed(2);
+
+        distance_value_comp = distance_value;
 
       }
     }
