@@ -699,6 +699,8 @@ function createTableComparison(population){
     tableDiv.appendChild(x);
 
     // itirate the index of individual
+
+    // population[i].length
     for(let j=0; j < population[i].length; j++){
 
         // Assignment of the index to the value of result of route
@@ -707,33 +709,51 @@ function createTableComparison(population){
         population[i][j] = table_rute_result[population[i][j]];
         // console.log("After Assigned Individu ke-"+i+" = "+population[i][j]);
 
+    }
 
-        for(let row=0; row<population[i][j].length; row++){
 
-          // CREATE TABEL ROW
-          let y = document.createElement("TR");
-          y.setAttribute("id", "myTr"+i);
-          tableId.appendChild(y);
+    for(let j=0; j < population[i].length; j++){
 
-          // number
-          let td = document.createElement('td');
-          td.appendChild(document.createTextNode(row+1));
-          y.appendChild(td);
-
-          // content
-
-          // CREATE TABLE CELL
-          let z = document.createElement("td");
-          let t = document.createTextNode(population[i][j][0]);
-          z.appendChild(t);
-          y.appendChild(z);
-
-          tableId.appendChild(y);
-
+      // find an index of "Lokasi Saya"
+      var myLocCounter;
+      for(let k=0; k < population[i].length; k++){
+        if (population[i][k][0] === "Lokasi Saya") {
+          console.log("Found Lokasi Saya in : "+k);
+          myLocCounter = k;
         }
+      }
 
+      var rute_part_a = population[i].slice(myLocCounter, population[i].length);
+      var rute_part_b = population[i].slice(0, myLocCounter);
+
+      // concat of two arrays rute_part_a & rute_part_b, so that lokasi saya is the first object
+      population[i] = rute_part_a.concat(rute_part_b);
+      // console.log(table_rute_result); // result in array
+
+
+      // CREATE TABEL ROW
+      let y = document.createElement("TR");
+      y.setAttribute("id", "myTr"+i);
+      tableId.appendChild(y);
+
+      // number
+      let td = document.createElement('td');
+      td.appendChild(document.createTextNode(i+1));
+      y.appendChild(td);
+
+      // content
+
+      // CREATE TABLE CELL
+      let z = document.createElement("td");
+      let t = document.createTextNode(population[i][j][0]);
+      z.appendChild(t);
+      y.appendChild(z);
+
+      tableId.appendChild(y);
 
     }
+
+
 
 
 
