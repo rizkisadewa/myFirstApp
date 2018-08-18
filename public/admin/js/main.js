@@ -764,19 +764,20 @@ function createTableComparison(population){
       cell.setAttribute("id", "dist"+i+j);
       // cell.innerHTML = "TBA";
 
-      // if ( j == population[i].length) {
-      //   let first_node = new google.maps.LatLng(population[i][0][1], population[i][0][2]);
-      //   let last_node = new google.maps.LatLng(population[i][population[i].length-1][1], population[i][population[i].length-1][2]);
-      //
-      //   calculateDistanceTC(last_node, first_node, i, j);
-      //
-      // } else {
-      //   let origin = new google.maps.LatLng(population[i][j][1], population[i][j][2]);
-      //   let destination = new google.maps.LatLng(population[i][j][1], population[i][j][2]);
-      //
-      //   calculateDistanceTC(origin, destination, i, j);
-      //
-      // }
+
+      if ( tableCounter == population[i].length) {
+        let first_node = new google.maps.LatLng(population[i][0][1], population[i][0][2]);
+        let last_node = new google.maps.LatLng(population[i][population[i].length-1][1], population[i][population[i].length-1][2]);
+
+        calculateDistanceTC(last_node, first_node, i, j);
+
+      } else {
+        let origin = new google.maps.LatLng(population[i][j][1], population[i][j][2]);
+        let destination = new google.maps.LatLng(population[i][j+1][1], population[i][j+1][2]);
+
+        calculateDistanceTC(origin, destination, i, j);
+
+      }
 
       // tableId.appendChild(tableDivRow);
       // tableDivRow.appendChild(tableDiv);
