@@ -162,7 +162,8 @@ var myLocationPosition;
 var table_rute_result = [];
 var comparison_population = [];
 var comp_ind_index = []; // comparison individual index
-var distance_value_comp; // ditance value for table comparison
+var distance_value_comp = []; // ditance value for table comparison
+var distance_counter = 0;
 
 // GOOGLE MAP API
 var map;
@@ -637,25 +638,18 @@ $(document).ready(function() {
 
                 for(let d=0 ; d < table_rute_result.length; d++){
 
-                  let dest_row = document.getElementById("target-result").rows[d+1];
-
-
                   if ( d == table_rute_result.length - 1) {
                     let first_node = new google.maps.LatLng(table_rute_result[0][1], table_rute_result[0][2]);
                     let last_node = new google.maps.LatLng(table_rute_result[table_rute_result.length-1][1], table_rute_result[table_rute_result.length-1][2]);
 
-                    calculateDistance(last_node, first_node);
-                    // console.log(first_node+" & "+last_node);
-                    let x = dest_row.insertCell(dest_row.length);
-                    x.innerHTML = distance_value_comp;
+                    calculateDistance(last_node, first_node, d);
+
                   } else {
                     let origin = new google.maps.LatLng(table_rute_result[d][1], table_rute_result[d][2]);
                     let destination = new google.maps.LatLng(table_rute_result[d+1][1], table_rute_result[d+1][2]);
 
-                    calculateDistance(origin, destination);
-                    // console.log(origin+" & "+destination);
-                    let x = dest_row.insertCell(dest_row.length);
-                    x.innerHTML = distance_value_comp;
+                    calculateDistance(origin, destination, d);
+
                   }
 
                 }
@@ -708,6 +702,9 @@ function createTableComparison(population){
 
     counterNo = counterNo + 1;
 
+    // CREATE TBODY
+    let tBody = tableHead.createTBody();
+
     // itirate the index of individual
 
     // population[i].length
@@ -721,7 +718,7 @@ function createTableComparison(population){
 
     }
 
-
+    var tableCounter = 0;
     for(let j=0; j < population[i].length; j++){
 
       // find an index of "Lokasi Saya"
@@ -740,12 +737,10 @@ function createTableComparison(population){
       population[i] = rute_part_a.concat(rute_part_b);
       // console.log(table_rute_result); // result in array
 
-      // CREATE TBODY
-      let tBody = tableHead.createTBody();
-
 
       // CREATE CONTENT OF TABLE
-      var row = tBody.insertRow(0);
+      var row = tBody.insertRow(tableCounter);
+      tableCounter = tableCounter + 1;
 
       // number column
       var cell = row.insertCell(0);
@@ -765,36 +760,27 @@ function createTableComparison(population){
       }
 
       // jarak column
-      // var cell = row.insertCell(3);
+      var cell = row.insertCell(3);
+      cell.setAttribute("id", "dist"+i+j);
       // cell.innerHTML = "TBA";
 
       // if ( j == population[i].length) {
       //   let first_node = new google.maps.LatLng(population[i][0][1], population[i][0][2]);
       //   let last_node = new google.maps.LatLng(population[i][population[i].length-1][1], population[i][population[i].length-1][2]);
       //
-      //   // console.log(calculateDistanceTC(last_node, first_node));
-      //   calculateDistanceTC(last_node, first_node);
-      //   var cell = row.insertCell(3);
-      //   cell.innerHTML = distance_value_comp;
-      //   // console.log(first_node+" & "+last_node);
-      //   // console.log("Last Node to last node");
+      //   calculateDistanceTC(last_node, first_node, i, j);
+      //
       // } else {
       //   let origin = new google.maps.LatLng(population[i][j][1], population[i][j][2]);
       //   let destination = new google.maps.LatLng(population[i][j][1], population[i][j][2]);
       //
-      //   // console.log(calculateDistanceTC(origin, destination));
-      //   calculateDistanceTC(origin, destination);
-      //   var cell = row.insertCell(3);
-      //   cell.innerHTML = distance_value_comp;
-      //   // console.log(origin+" & "+destination);
-      //   // console.log("Origin Node to Next Node");
+      //   calculateDistanceTC(origin, destination, i, j);
+      //
       // }
 
-
-
-      tableId.appendChild(tableDivRow);
-      tableDivRow.appendChild(tableDiv);
-      tableDiv.appendChild(x);
+      // tableId.appendChild(tableDivRow);
+      // tableDivRow.appendChild(tableDiv);
+      // tableDiv.appendChild(x);
 
       // // CREATE TABEL ROW
       // let y = document.createElement("TR");
@@ -822,7 +808,7 @@ function createTableComparison(population){
 
 
 
-  };
+  }
   // console.log(population);
 
 
@@ -830,7 +816,7 @@ function createTableComparison(population){
 
 
 // Get Distance for table_rute_result
-function calculateDistance(origin, destination){
+function calculateDistance(origin, destination, iterasi){
   var service = new google.maps.DistanceMatrixService();
   let distance;
   let distance_value_raw;
@@ -860,13 +846,10 @@ function calculateDistance(origin, destination){
         distance_value_raw = distance.value * 0.001;
         distance_value = distance_value_raw.toFixed(2);
 
-        // distance_array.push(1);
-        //
-        // let dist_row = document.getElementById("target-result").rows[distance_array.length];
-        // let x = dist_row.insertCell(dist_row.length);
-        // x.innerHTML = distance_value;
+        let dest_row = document.getElementById("target-result").rows[iterasi+1];
 
-        distance_value_comp = distance_value
+        let x = dest_row.insertCell(dest_row.length);
+        x.innerHTML = distance_value;
 
 
       }
@@ -874,14 +857,15 @@ function calculateDistance(origin, destination){
 
   }
 
-  return distance_value_comp;
-
 
 }
 
 // Get Distance for table_comparison
-function calculateDistanceTC(origin, destination){
+function calculateDistanceTC(origin, destination, iterasi1, iterasi2){
   var service = new google.maps.DistanceMatrixService();
+  let distance;
+  let distance_value_raw;
+  let distance_value;
 
   service.getDistanceMatrix(
   {
@@ -903,9 +887,13 @@ function calculateDistanceTC(origin, destination){
       if (response.rows[0].elements[0].status === "ZERO_RESULTS") {
         alert("Better get on a plane. There are no roads between "+origin+" and "+destination);
       } else {
-        let distance = response.rows[0].elements[0].distance;
-        let distance_value_raw = distance.value * 0.001;
-        let distance_value = distance_value_raw.toFixed(2);
+        distance = response.rows[0].elements[0].distance;
+        distance_value_raw = distance.value * 0.001;
+        distance_value = distance_value_raw.toFixed(2);
+
+        let dest_row = document.getElementById("dist"+iterasi1+iterasi2);
+
+        dest_row.innerHTML = distance_value;
 
       }
     }
