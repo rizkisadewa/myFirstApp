@@ -779,35 +779,7 @@ function createTableComparison(population){
 
       }
 
-      // tableId.appendChild(tableDivRow);
-      // tableDivRow.appendChild(tableDiv);
-      // tableDiv.appendChild(x);
-
-      // // CREATE TABEL ROW
-      // let y = document.createElement("TR");
-      // y.setAttribute("id", "myTr"+i);
-      // tableId.appendChild(y);
-      //
-      // // number
-      // let td = document.createElement('td');
-      // td.appendChild(document.createTextNode(i+1));
-      // y.appendChild(td);
-      //
-      // // content
-      //
-      // // CREATE TABLE CELL
-      // let z = document.createElement("td");
-      // let t = document.createTextNode(population[i][j][0]);
-      // z.appendChild(t);
-      // y.appendChild(z);
-      //
-      // tableId.appendChild(y);
-
     }
-
-
-
-
 
   }
   // console.log(population);
