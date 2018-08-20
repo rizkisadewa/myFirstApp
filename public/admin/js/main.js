@@ -164,6 +164,7 @@ var comparison_population = [];
 var comp_ind_index = []; // comparison individual index
 var distance_value_comp = []; // ditance value for table comparison
 var distance_counter = 0;
+var dist_ttl_1 = 0;
 
 // GOOGLE MAP API
 var map;
@@ -654,6 +655,20 @@ $(document).ready(function() {
 
                 }
 
+                // CREATE TOTAL OF DISTANCE ROW
+                let total_dist_row = document.createElement('tr');
+                let td_3 = document.createElement('td');
+                td_3.setAttribute('colspan', '3');
+                td_3.setAttribute('align', 'right');
+                td_3.appendChild(document.createTextNode("Total Jarak"));
+                total_dist_row.appendChild(td_3);
+
+                let td_4 = document.createElement('td');
+                td_4.setAttribute('id', 'totalDistance_1');
+                total_dist_row.appendChild(td_4);
+                html_table_result.appendChild(total_dist_row);
+
+
                 createTableComparison(comp_ind_index);
 
             });
@@ -779,6 +794,8 @@ function createTableComparison(population){
 
       }
 
+      
+
     }
 
   }
@@ -824,6 +841,11 @@ function calculateDistance(origin, destination, iterasi){
         let x = dest_row.insertCell(dest_row.length);
         x.innerHTML = distance_value;
 
+        let int_dist_value = parseFloat(distance_value);
+        dist_ttl_1 = dist_ttl_1 + int_dist_value;
+
+        let y = document.getElementById("totalDistance_1");
+        y.innerHTML = dist_ttl_1;
 
       }
     }
