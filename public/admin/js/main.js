@@ -666,7 +666,7 @@ function createTableComparison(population){
 
   var counterNo = 1;
   // iterate the index of population
-  for(let i=0; i < population.length; i++){
+  for(let i=0; i < 10; i++){
     //console.log("Individu ke "+i+" = "+population[i]);
 
     // CREATE TABLES
