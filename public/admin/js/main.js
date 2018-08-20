@@ -165,6 +165,8 @@ var comp_ind_index = []; // comparison individual index
 var distance_value_comp = []; // ditance value for table comparison
 var distance_counter = 0;
 var dist_ttl_1 = 0;
+var dist_ttl_2 = 0;
+var dist_ttl_2_arr = [];
 
 // GOOGLE MAP API
 var map;
@@ -794,9 +796,26 @@ function createTableComparison(population){
 
       }
 
-      
-
     }
+
+    // CREATE TOTAL OF DISTANCE ROW
+    let total_dist_row = document.createElement('tr');
+    let td_com_3 = document.createElement('td');
+    td_com_3.setAttribute('colspan', '3');
+    td_com_3.setAttribute('align', 'right');
+    td_com_3.appendChild(document.createTextNode("Total Jarak"));
+    tBody.appendChild(td_com_3);
+
+
+    let td_com_4 = document.createElement('td');
+    td_com_4.setAttribute('id', 'totalDistanceCom_'+i);
+    tBody.appendChild(td_com_4);
+
+    tableHead.appendChild(tBody);
+    tableDiv.appendChild(tableHead);
+
+    let y = document.getElementById("totalDistanceCom_"+i);
+    y.innerHTML = dist_ttl_2_arr[i];
 
   }
   // console.log(population);
@@ -889,6 +908,14 @@ function calculateDistanceTC(origin, destination, iterasi1, iterasi2){
         let dest_row = document.getElementById("dist"+iterasi1+iterasi2);
 
         dest_row.innerHTML = distance_value;
+
+        let int_dist_value = parseFloat(distance_value);
+
+        dist_ttl_2 = dist_ttl_2 + int_dist_value;
+        dist_ttl_2_arr.push(dist_ttl_2);
+
+        let y = document.getElementById("totalDistanceCom_"+iterasi1);
+        y.innerHTML = dist_ttl_2;
 
       }
     }
