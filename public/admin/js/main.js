@@ -165,7 +165,7 @@ var comp_ind_index = []; // comparison individual index
 var distance_value_comp = []; // ditance value for table comparison
 var distance_counter = 0;
 var dist_ttl_1 = 0;
-var dist_ttl_2 = 0;
+var dist_ttl_2 = [];
 var dist_ttl_2_arr = [];
 
 // GOOGLE MAP API
@@ -736,8 +736,13 @@ function createTableComparison(population){
     }
 
     var tableCounter = 0;
+    dist_ttl_2_arr.push(1);
+
+
     for(let j=0; j < population[i].length; j++){
 
+      dist_ttl_2[i] = new Array();
+      dist_ttl_2[i][j] = 1;
       // find an index of "Lokasi Saya"
       var myLocCounter;
       for(let k=0; k < population[i].length; k++){
@@ -797,6 +802,7 @@ function createTableComparison(population){
       }
 
     }
+
 
     // CREATE TOTAL OF DISTANCE ROW
     let total_dist_row = document.createElement('tr');
@@ -864,7 +870,7 @@ function calculateDistance(origin, destination, iterasi){
         dist_ttl_1 = dist_ttl_1 + int_dist_value;
 
         let y = document.getElementById("totalDistance_1");
-        y.innerHTML = dist_ttl_1;
+        y.innerHTML = dist_ttl_1.toFixed(2);
 
       }
     }
@@ -911,11 +917,18 @@ function calculateDistanceTC(origin, destination, iterasi1, iterasi2){
 
         let int_dist_value = parseFloat(distance_value);
 
-        dist_ttl_2 = dist_ttl_2 + int_dist_value;
-        dist_ttl_2_arr.push(dist_ttl_2);
+
+        dist_ttl_2[iterasi1][iterasi2] = int_dist_value;
+
+        let total_dist = 0;
+        for(let i=0; i < dist_ttl_2[iterasi1].length; i++){
+          total_dist += dist_ttl_2[iterasi1][i];
+        }
+
+        dist_ttl_2_arr[iterasi1] = total_dist.toFixed(2);
 
         let y = document.getElementById("totalDistanceCom_"+iterasi1);
-        y.innerHTML = dist_ttl_2;
+        y.innerHTML = dist_ttl_2_arr[iterasi1];
 
       }
     }
